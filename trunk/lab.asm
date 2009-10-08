@@ -24,15 +24,15 @@
 ; ============================================
 ;
 
-.macro ctabits1 ;find how many 1 there are in the vector 
-		; Input Parameters
-		; @0 e @1: dois registradores quaisquer (números para multiplcar)
-		; @2 um dos pares X,Y ou Z: endereço na RAM para colocar o produto no formato little endian
+.macro clrbitvet ;find how many 1 there are in the vector 
+		 ; Input Parameters
+		 ; @0 e @1: dois registradores quaisquer (números para multiplcar)
+		 ; @2 um dos pares X,Y ou Z: endereço na RAM para colocar o produto no formato little endian
 
 
 .endmacro
 
-.macro clrbitvet ;find how many 1 there are in the vector 
+.macro ctabits1 ;find how many 1 there are in the vector 
 		; Input Parameters
 		; @0 e @1: vector adress,output
 .endmacro
