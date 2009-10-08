@@ -24,12 +24,10 @@
 ; ============================================
 ;
 
-.macro clrbitvet ;find how many 1 there are in the vector 
+.macro clrbitvet ; reset vector 
 		 ; Input Parameters
-		 ; @0 e @1: dois registradores quaisquer (números para multiplcar)
-		 ; @2 um dos pares X,Y ou Z: endereço na RAM para colocar o produto no formato little endian
-
-
+		 ; @0 e @1: vector adress, vector length (números para multiplcar)
+		 
 .endmacro
 
 .macro ctabits1 ;find how many 1 there are in the vector 
