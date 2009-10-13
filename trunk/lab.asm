@@ -1,7 +1,7 @@
 ;
 ; *********************************************
 ; * [Atividade 1 MC404 - Unicamp]             *
-; * [Class project] 			      *
+; * [Class project]                           *
 ; * (C)2009 by Alexandre Nobuo Kunieda 080523 *   
 ; *            Tiago Cheadraoui Silva  082941 *
 ; *********************************************

@@ -1,0 +1,25 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.7</VERSION>
+ <DEVICE>ATmega88</DEVICE>
+ <WORKING_DIR>H:\windows\lab</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Arquivos de programas\Atmel\AVR Tools\AvrAssembler2\Appnotes</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>H:\windows\lab\lab.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Arquivos de programas\Atmel\AVR Tools\AvrAssembler2\Appnotes\m88def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>H:\windows\lab\lab.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>H:\windows\lab\lab.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>H:\windows\lab\lab.map</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <Init><FILE>H:\windows\lab\lab.asm</FILE><LINE>43</LINE></Init>
+  <Loop><FILE>H:\windows\lab\lab.asm</FILE><LINE>60</LINE></Loop>
+ </LABELS>
+</ASSEMBLER_INFO>
