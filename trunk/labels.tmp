@@ -19,7 +19,15 @@
   <FILE>H:\windows\lab\lab.map</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <Init><FILE>H:\windows\lab\lab.asm</FILE><LINE>43</LINE></Init>
-  <Loop><FILE>H:\windows\lab\lab.asm</FILE><LINE>60</LINE></Loop>
+  <vetor><FILE>H:\windows\lab\lab.asm</FILE><LINE>30</LINE></vetor>
+  <Reset><FILE>H:\windows\lab\lab.asm</FILE><LINE>52</LINE></Reset>
+  <Main><FILE>H:\windows\lab\lab.asm</FILE><LINE>38</LINE></Main>
+  <toram><FILE>H:\windows\lab\lab.asm</FILE><LINE>95</LINE></toram>
+  <ctabits1><FILE>H:\windows\lab\lab.asm</FILE><LINE>70</LINE></ctabits1>
+  <ctabits1_loop><FILE>H:\windows\lab\lab.asm</FILE><LINE>77</LINE></ctabits1_loop>
+  <ctabits1_loop_byte><FILE>H:\windows\lab\lab.asm</FILE><LINE>81</LINE></ctabits1_loop_byte>
+  <clrbitvet><FILE>H:\windows\lab\lab.asm</FILE><LINE>92</LINE></clrbitvet>
+  <vetorflash><FILE>H:\windows\lab\lab.asm</FILE><LINE>109</LINE></vetorflash>
+  <toram_loop><FILE>H:\windows\lab\lab.asm</FILE><LINE>102</LINE></toram_loop>
  </LABELS>
 </ASSEMBLER_INFO>
