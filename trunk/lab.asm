@@ -44,6 +44,8 @@ Main:
 
 	ldi input1, high(vetor)
 	ldi input2, low(vetor)
+
+	rcall findbit
 	rcall ctabits1
 	rcall clrbitvet
 
@@ -131,5 +133,34 @@ toram:
 		dec r16
 		brne toram_loop
 ret
+;
+;
+;
+findbit:   ;input : vector adress,index [vector]
+		   ;output : bytes adress, index [byte]
 
-vetorflash: .db 0x05, 0x15
+	ldi xh,high(vetor) ;vector init in SRAM
+	ldi xl,low(vetor)  ;vector init in SRAM
+	ldi yl,0x11 
+	ldi yh,0x00 
+
+	ldi aux2,0  ;1 byte
+	ldi aux3,3  ;1 byte
+		
+		findbit_loop: ;find position of vector 
+			ror yl
+			clc
+			ror yh
+			adc yl,aux2 ;aux2 = 0
+			dec aux3
+		brne findbit_loop
+
+	add xl,yl ;byte init position in SRAM
+	adc xh,yh  ;byte init position in SRAM
+
+
+
+ret
+
+
+vetorflash: .db 0x05, 0x15,0x20
