@@ -148,10 +148,8 @@ findbit:   ;input : vector adress,index [vector]
 	ldi aux3,3  ;1 byte
 		
 		findbit_loop: ;find position of vector 
-			ror yl
-			clc
 			ror yh
-			adc yl,aux2 ;aux2 = 0
+			ror yl
 			dec aux3
 		brne findbit_loop
 
