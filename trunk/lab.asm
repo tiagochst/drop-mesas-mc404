@@ -23,6 +23,9 @@
 .DEF output = R20
 .DEF aux1 = R21
 .DEF aux2 = R22
+.DEF aux3 = R23
+
+
 ;
 ;
 .equ vetorflash_sz=2
@@ -73,21 +76,26 @@ ctabits1: ;find how many 1 there are in the vector
 	mov xh,input1
 	mov xl,input2
 
-	ldi r16,vetor_sz
-	ldi r18,0
-	ldi output,0
+	ldi aux1,vetor_sz
+	ldi aux2,0
+	ldi yh,0x00
+	ldi yl,0x00
+		
+
 	ctabits1_loop:
 		ld r17,X+
 
-		ldi r19,8
+		ldi aux3,8  ;1 byte
 		ctabits1_loop_byte:
 			clc
 			rol r17
-			adc output,r18 ;r18 = 0
-			dec r19
+			adc yl,aux2 ;aux2 = 0
+			adc yh,aux2 ;aux2 = 0
+
+			dec aux3
 			brne ctabits1_loop_byte
 
-		dec r16
+		dec aux1
 		brne ctabits1_loop
 ret
 ;
@@ -98,13 +106,13 @@ clrbitvet: ; reset vector
 	ldi xh,high(vetor) ;vector init in SRAM
 	ldi xl,low(vetor)  ;vector init in SRAM
 
-	ldi aux2,vetor_sz 
+	ldi yl,vetor_sz 
 	ldi aux1,0
 
 	clrbitvet_loop:
 
 		st X+,aux1 ;reset all values of vector
-		dec aux2   ;ends when equal to zero 
+		dec yl   ;ends when equal to zero 
 		brne clrbitvet_loop
 ret
 ;
