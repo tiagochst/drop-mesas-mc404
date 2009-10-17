@@ -42,6 +42,7 @@ Main:
 	ldi input1, high(vetor)
 	ldi input2, low(vetor)
 	rcall ctabits1
+	rcall clrbitvet
 
 	rjmp PC
 ;
@@ -106,11 +107,6 @@ clrbitvet: ; reset vector
 		dec aux2   ;ends when equal to zero 
 		brne clrbitvet_loop
 ret
-
-
-
-
-ret
 ;
 ;
 ;
@@ -128,31 +124,4 @@ toram:
 		brne toram_loop
 ret
 
-
-setbits0: ;find how many 1 there are in the vector 
-	mov xh,input1
-	mov xl,input2
-
-	ldi r16,vetor_sz
-	ldi r18,0
-	ldi output,0
-	ctabits1_loop:
-		ld r17,X+
-
-		ldi r19,8
-		ctabits1_loop_byte:
-			clc
-			rol r17
-			dec r19
-			brne ctabits1_loop_byte
-
-		dec r16
-		brne ctabits1_loop
-ret
-
-clrbitvet: ; reset vector 
-ret
-
-
-
-vetorflash: .db 0x04, 0x23
+vetorflash: .db 0x05, 0x15
