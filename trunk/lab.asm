@@ -1,5 +1,4 @@
-;
-; *********************************************
+;; *********************************************
 ; * [Atividade 1 MC404 - Unicamp]             *
 ; * [Class project]                           *
 ; * (C)2009 by Alexandre Nobuo Kunieda 080523 *   
@@ -22,6 +21,8 @@
 .DEF input1 = R18
 .DEF input2 = R19
 .DEF output = R20
+.DEF aux1 = R21
+.DEF aux2 = R22
 ;
 ;
 .equ vetorflash_sz=2
@@ -88,10 +89,31 @@ ctabits1: ;find how many 1 there are in the vector
 		dec r16
 		brne ctabits1_loop
 ret
-
+;
+;
+;
 clrbitvet: ; reset vector 
+
+	ldi xh,high(vetor) ;vector init in SRAM
+	ldi xl,low(vetor)  ;vector init in SRAM
+
+	ldi aux2,vetor_sz 
+	ldi aux1,0
+
+	clrbitvet_loop:
+
+		st X+,aux1 ;reset all values of vector
+		dec aux2   ;ends when equal to zero 
+		brne clrbitvet_loop
 ret
 
+
+
+
+ret
+;
+;
+;
 toram:
 	ldi zh,high(vetorflash*2); multiplied by 2 for bytewise access
 	ldi zl,low(vetorflash*2) ; multiplied by 2 for bytewise access
@@ -105,5 +127,32 @@ toram:
 		dec r16
 		brne toram_loop
 ret
+
+
+setbits0: ;find how many 1 there are in the vector 
+	mov xh,input1
+	mov xl,input2
+
+	ldi r16,vetor_sz
+	ldi r18,0
+	ldi output,0
+	ctabits1_loop:
+		ld r17,X+
+
+		ldi r19,8
+		ctabits1_loop_byte:
+			clc
+			rol r17
+			dec r19
+			brne ctabits1_loop_byte
+
+		dec r16
+		brne ctabits1_loop
+ret
+
+clrbitvet: ; reset vector 
+ret
+
+
 
 vetorflash: .db 0x04, 0x23
