@@ -24,6 +24,7 @@
 .DEF aux1 = R21
 .DEF aux2 = R22
 .DEF aux3 = R23
+.DEF aux4 = R24
 
 
 ;
@@ -141,24 +142,33 @@ findbit:   ;input : vector adress,index [vector]
 
 	ldi xh,high(vetor) ;vector init in SRAM
 	ldi xl,low(vetor)  ;vector init in SRAM
-	ldi yl,0x11 
+	ldi yl,0x13 
 	ldi yh,0x00 
 
-	ldi aux2,0  ;1 byte
-	ldi aux3,3  ;1 byte
+	ldi aux1,0  ;used for byte index
+	ldi aux2,0  ;useless
+	ldi aux3,3  ;loop
+	ldi aux4,0x01 ;compare and skiping  
 		
 		findbit_loop: ;find position of vector 
+			clc
 			ror yh
 			ror yl
+			adc aux1,aux2
+			clc
+
+			cpse aux3,aux4
+			rol aux1
+
 			dec aux3
 		brne findbit_loop
 
 	add xl,yl ;byte init position in SRAM
 	adc xh,yh  ;byte init position in SRAM
 
-
+	ldi r17,8
+	sub r17,aux1	
 
 ret
-
 
 vetorflash: .db 0x05, 0x15,0x20
