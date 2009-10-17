@@ -29,8 +29,8 @@
   <ctabits1_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>87</LINE></ctabits1_loop>
   <ctabits1_loop_byte><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>91</LINE></ctabits1_loop_byte>
   <clrbitvet_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>114</LINE></clrbitvet_loop>
-  <vetorflash><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>164</LINE></vetorflash>
+  <vetorflash><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>173</LINE></vetorflash>
   <toram_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>130</LINE></toram_loop>
-  <findbit_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>150</LINE></findbit_loop>
+  <findbit_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>152</LINE></findbit_loop>
  </LABELS>
 </ASSEMBLER_INFO>
