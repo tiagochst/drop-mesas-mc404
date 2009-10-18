@@ -180,7 +180,6 @@ rcall findbit
 		rol aux2
 		dec aux1	
 	brne setbit_loop
-		clc
 		ror aux2
 
 	
