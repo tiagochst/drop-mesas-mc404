@@ -20,17 +20,21 @@
  </OUTPUT_FILES>
  <LABELS>
   <vetor><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>35</LINE></vetor>
-  <Reset><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>60</LINE></Reset>
+  <Reset><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>61</LINE></Reset>
   <Main><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>43</LINE></Main>
-  <toram><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>124</LINE></toram>
-  <findbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>140</LINE></findbit>
-  <ctabits1><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>78</LINE></ctabits1>
-  <clrbitvet><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>107</LINE></clrbitvet>
-  <ctabits1_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>88</LINE></ctabits1_loop>
-  <ctabits1_loop_byte><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>92</LINE></ctabits1_loop_byte>
-  <clrbitvet_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>115</LINE></clrbitvet_loop>
-  <vetorflash><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>169</LINE></vetorflash>
-  <toram_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>131</LINE></toram_loop>
-  <findbit_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>153</LINE></findbit_loop>
+  <toram><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>125</LINE></toram>
+  <setbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>172</LINE></setbit>
+  <findbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>141</LINE></findbit>
+  <ctabits1><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>79</LINE></ctabits1>
+  <clrbitvet><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>108</LINE></clrbitvet>
+  <ctabits1_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>89</LINE></ctabits1_loop>
+  <ctabits1_loop_byte><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>93</LINE></ctabits1_loop_byte>
+  <clrbitvet_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>116</LINE></clrbitvet_loop>
+  <vetorflash><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>204</LINE></vetorflash>
+  <toram_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>132</LINE></toram_loop>
+  <findbit_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>154</LINE></findbit_loop>
+  <setbit_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>182</LINE></setbit_loop>
+  <clrbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>195</LINE></clrbit>
+  <tstbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>200</LINE></tstbit>
  </LABELS>
 </ASSEMBLER_INFO>

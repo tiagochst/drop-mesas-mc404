@@ -29,7 +29,7 @@
 
 ;
 ;
-.equ vetorflash_sz=2
+.equ vetorflash_sz=3
 ;
 .equ vetor_sz=vetorflash_sz
 .dseg vetor: .byte vetor_sz
@@ -46,6 +46,7 @@ Main:
 	ldi input1, high(vetor)
 	ldi input2, low(vetor)
 
+	rcall setbit
 	rcall findbit
 	rcall ctabits1
 	rcall clrbitvet
@@ -165,5 +166,37 @@ findbit:   ;input : vector adress,index [vector]
 	sub r17,aux1	
 
 ret
+;
+;
+;
+setbit: ;given the index of the bits change it to 1
+
+rcall findbit
+
+	ldi aux2,0x01
+	dec aux1
+	clc
+
+	setbit_loop:
+		rol aux2
+		dec aux1	
+	brne setbit_loop
+	
+		LD r17,X
+		or r17,aux2
+		st x,r17
+
+ret
+;
+;
+;
+clrbit :
+ret
+;
+;
+;
+tstbit:
+ret
+
 
 vetorflash: .db 0x05, 0x15,0x20
