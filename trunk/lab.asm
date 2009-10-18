@@ -143,8 +143,8 @@ findbit:   ;input : vector adress,index [vector]
 
 	ldi xh,high(vetor) ;vector init in SRAM
 	ldi xl,low(vetor)  ;vector init in SRAM
-	ldi yl,0x06 
-	ldi yh,0x00 
+	ldi yl,0x0C ;position to find 
+	ldi yh,0x00 ;position to find 
 
 	mov aux1,yl  ;used for byte index
 	ldi aux2,0  ;useless
@@ -174,13 +174,15 @@ setbit: ;given the index of the bits change it to 1
 rcall findbit
 
 	ldi aux2,0x01
-	dec aux1
 	clc
 
 	setbit_loop:
 		rol aux2
 		dec aux1	
 	brne setbit_loop
+		clc
+		ror aux2
+
 	
 		LD r17,X
 		or r17,aux2

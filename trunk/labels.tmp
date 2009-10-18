@@ -33,7 +33,7 @@
   <vetorflash><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>204</LINE></vetorflash>
   <toram_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>132</LINE></toram_loop>
   <findbit_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>154</LINE></findbit_loop>
-  <setbit_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>182</LINE></setbit_loop>
+  <setbit_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>179</LINE></setbit_loop>
   <clrbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>195</LINE></clrbit>
   <tstbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>200</LINE></tstbit>
  </LABELS>

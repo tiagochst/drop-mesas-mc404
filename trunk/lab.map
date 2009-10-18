@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  C:\Users\Tiago\Desktop\MC404\lab1\lab.asm Sun Oct 18 01:23:53 2009
+AVRASM ver. 2.1.30  C:\Users\Tiago\Desktop\MC404\lab1\lab.asm Sun Oct 18 01:44:16 2009
 
 
 EQU  SIGNATURE_000 0000001e
@@ -711,9 +711,9 @@ CSEG clrbitvet    00000021
 CSEG ctabits1_loop 00000016
 CSEG ctabits1_loop_byte 00000018
 CSEG clrbitvet_loop 00000025
-CSEG vetorflash   00000053
+CSEG vetorflash   00000054
 CSEG toram_loop   0000002e
 CSEG findbit_loop 0000003b
-CSEG setbit_loop  0000004a
-CSEG clrbit       00000051
-CSEG tstbit       00000052
+CSEG setbit_loop  00000049
+CSEG clrbit       00000052
+CSEG tstbit       00000053
