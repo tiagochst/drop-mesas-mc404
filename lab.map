@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  C:\Users\Tiago\Desktop\MC404\lab1\lab.asm Sat Oct 17 14:25:06 2009
+AVRASM ver. 2.1.30  C:\Users\Tiago\Desktop\MC404\lab1\lab.asm Sat Oct 17 22:44:15 2009
 
 
 EQU  SIGNATURE_000 0000001e
@@ -697,6 +697,7 @@ DEF  output       r20
 DEF  aux1         r21
 DEF  aux2         r22
 DEF  aux3         r23
+DEF  aux4         r24
 EQU  vetorflash_sz 00000002
 EQU  vetor_sz     00000002
 DSEG vetor        00000100
@@ -709,6 +710,6 @@ CSEG clrbitvet    00000020
 CSEG ctabits1_loop 00000015
 CSEG ctabits1_loop_byte 00000017
 CSEG clrbitvet_loop 00000024
-CSEG vetorflash   00000048
+CSEG vetorflash   00000045
 CSEG toram_loop   0000002d
 CSEG findbit_loop 0000003a
