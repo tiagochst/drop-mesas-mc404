@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  C:\Users\Tiago\Desktop\MC404\lab1\lab.asm Tue Oct 20 17:38:06 2009
+AVRASM ver. 2.1.30  C:\Users\Tiago\Desktop\MC404\lab1\lab.asm Tue Oct 20 18:26:00 2009
 
 
 EQU  SIGNATURE_000 0000001e
@@ -691,34 +691,35 @@ EQU  TWIaddr      00000018
 EQU  SPMRaddr     00000019
 EQU  INT_VECTORS_SIZE 0000001a
 DEF  rmp          r16
-DEF  input1       r18
-DEF  input2       r19
-DEF  output       r20
-DEF  aux1         r21
-DEF  aux2         r22
-DEF  aux3         r23
-DEF  aux4         r24
+DEF  e2proml      r24
+DEF  e2promh      r25
+DEF  output       r19
+DEF  aux1         r20
+DEF  aux2         r21
+DEF  aux3         r22
+DEF  aux4         r23
 EQU  vetorflash_sz 00000003
 EQU  vetor_sz     00000003
 EQU  hb_index     00000000
-EQU  lb_index     00000007
-DSEG vetor        00000100
+EQU  lb_index     0000000f
 CSEG Reset        0000001f
 CSEG Main         00000001
-CSEG toram        0000004d
-CSEG clrbitvet    00000035
-CSEG setbit       0000006f
-CSEG clrbit       00000075
-CSEG tstbit       0000007c
+CSEG toe2prom     00000053
+CSEG clrbitvet    00000038
+CSEG setbit       00000074
+CSEG clrbit       0000007b
+CSEG tstbit       00000083
 CSEG ctabits1     00000026
-CSEG ctabits1_loop 0000002a
-CSEG ctabits1_loop_byte 0000002c
-CSEG findbit      00000057
-CSEG clrbitvet_loop 0000003e
-CSEG clrbitvet_jump 00000043
-CSEG clrbitvet_loop2 00000046
-CSEG vetorflash   00000086
-CSEG toram_loop   00000052
-CSEG findbit_loop 0000005b
-CSEG findbit_index_loop 00000069
-CSEG tstbit_sai   00000084
+CSEG ctabits1_loop 0000002c
+CSEG rdbyte       00000098
+CSEG ctabits1_loop_byte 0000002f
+CSEG findbit      0000005c
+CSEG clrbitvet_loop 00000041
+CSEG clrbitvet_jump 00000048
+CSEG wtbyte       0000008e
+CSEG clrbitvet_loop2 0000004c
+CSEG vetorflash   0000009f
+CSEG toe2prom_loop 00000056
+CSEG findbit_loop 00000060
+CSEG findbit_index_loop 0000006e
+CSEG tstbit_sai   0000008c
