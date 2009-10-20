@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  C:\Users\Tiago\Desktop\MC404\lab1\lab.asm Sun Oct 18 01:44:16 2009
+AVRASM ver. 2.1.30  C:\Users\Tiago\Desktop\MC404\lab1\lab.asm Tue Oct 20 17:38:06 2009
 
 
 EQU  SIGNATURE_000 0000001e
@@ -700,20 +700,25 @@ DEF  aux3         r23
 DEF  aux4         r24
 EQU  vetorflash_sz 00000003
 EQU  vetor_sz     00000003
+EQU  hb_index     00000000
+EQU  lb_index     00000007
 DSEG vetor        00000100
-CSEG Reset        00000009
+CSEG Reset        0000001f
 CSEG Main         00000001
-CSEG toram        00000029
-CSEG setbit       00000046
-CSEG findbit      00000033
-CSEG ctabits1     00000010
-CSEG clrbitvet    00000021
-CSEG ctabits1_loop 00000016
-CSEG ctabits1_loop_byte 00000018
-CSEG clrbitvet_loop 00000025
-CSEG vetorflash   00000054
-CSEG toram_loop   0000002e
-CSEG findbit_loop 0000003b
-CSEG setbit_loop  00000049
-CSEG clrbit       00000052
-CSEG tstbit       00000053
+CSEG toram        0000004d
+CSEG clrbitvet    00000035
+CSEG setbit       0000006f
+CSEG clrbit       00000075
+CSEG tstbit       0000007c
+CSEG ctabits1     00000026
+CSEG ctabits1_loop 0000002a
+CSEG ctabits1_loop_byte 0000002c
+CSEG findbit      00000057
+CSEG clrbitvet_loop 0000003e
+CSEG clrbitvet_jump 00000043
+CSEG clrbitvet_loop2 00000046
+CSEG vetorflash   00000086
+CSEG toram_loop   00000052
+CSEG findbit_loop 0000005b
+CSEG findbit_index_loop 00000069
+CSEG tstbit_sai   00000084
