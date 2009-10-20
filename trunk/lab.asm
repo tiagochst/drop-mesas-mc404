@@ -162,9 +162,17 @@ findbit:   ;input : vector adress,index [vector]
 	adc xh,yh  ;byte init position in SRAM
 
 	ANDI aux1,0x07
-	ldi r17,8
+	ldi r17,7
 	sub r17,aux1	
+	ldi aux2,0x01  ;useless
 
+		findbit_index_loop: ;find position of vector 
+			clc
+			rol aux2
+			dec r17
+		brne findbit_index_loop
+
+		mov r17,aux2  ;byte index
 ret
 ;
 ;
@@ -173,19 +181,10 @@ setbit: ;given the index of the bits change it to 1
 
 rcall findbit
 
-	ldi aux2,0x01
-	clc
-
-	setbit_loop:
-		rol aux2
-		dec aux1	
-	brne setbit_loop
-		ror aux2
-
-	
-		LD r17,X
-		or r17,aux2
-		st x,r17
+	ldi aux2,r17;Mask
+	LD r17,X
+	or r17,aux2
+	st x,r17
 
 ret
 ;
