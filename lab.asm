@@ -18,13 +18,13 @@
 ;  all used registers without specific names]
 ; Format: .DEF rmp = R16
 .DEF rmp = R16
-.DEF input1 = R18
-.DEF input2 = R19
-.DEF output = R20
-.DEF aux1 = R21
-.DEF aux2 = R22
-.DEF aux3 = R23
-.DEF aux4 = R24
+.DEF e2proml = R24
+.DEF e2promh = R25
+.DEF output = R19
+.DEF aux1 = R20
+.DEF aux2 = R21
+.DEF aux3 = R22
+.DEF aux4 = R23
 
 
 ;
@@ -33,10 +33,7 @@
 ;
 .equ vetor_sz=vetorflash_sz
 .equ hb_index = 0x00
-.equ lb_index = 0x07
-
-.dseg vetor: .byte vetor_sz
-.cseg
+.equ lb_index = 0x0F
 ;
 ; ============================================
 ;         P R O G R A M    L O O P
@@ -44,42 +41,37 @@
 ;
 rjmp Reset
 Main:
-	rcall toram
+	rcall toe2prom
 
-	ldi xh,high(vetor) ;vector init in SRAM (parameters to clrbitvet)
-	ldi xl,low(vetor)  ;vector init in SRAM (parameters to clrbitvet)
-	ldi yl,lb_index    ;vector size in bits (parameters to clrbitvet)
-	ldi yh,hb_index    ;vector size in bits (parameters to clrbitvet)
+	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+	ldi yl,lb_index  ;vector size in bits (parameters to clrbitvet)
+	ldi yh,hb_index  ;vector size in bits (parameters to clrbitvet)
 	rcall clrbitvet
 
 
-	ldi xh,high(vetor) ;vector init in SRAM (parameters to setdbit)
-	ldi xl,low(vetor)  ;vector init in SRAM (parameters to setbit)
+	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
 	ldi yl,0x08        ;position to find  (parameters to setbit)
 	ldi yh,0x00        ;position to find (parameters to setbit)
 	rcall setbit
 
-	ldi xh,high(vetor) ;vector init in SRAM (parameters to clrbit)
-	ldi xl,low(vetor)  ;vector init in SRAM (parameters to clrbit)
+	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
 	ldi yl,lb_index       ;position to find  (parameters to clrbit)
 	ldi yh,hb_index        ;position to find (parameters to clrbit)
 	rcall clrbit 
 
-	ldi xh,high(vetor) ;vector init in SRAM (parameters to clrbit)
-	ldi xl,low(vetor)  ;vector init in SRAM (parameters to clrbit)
+	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
 	ldi yl,lb_index        ;position to find  (parameters to clrbit)
 	ldi yh,hb_index        ;position to find (parameters to clrbit)
 	rcall tstbit
 
-	ldi xh,high(vetor) ;vector init in SRAM (parameters to ctabits1)
-	ldi xl,low(vetor)  ;vector init in SRAM (parameters to ctabits1)
+	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
 	rcall ctabits1
 	
-	ldi xh,high(vetor) ;vector init in SRAM (parameters to clrbitvet)
-	ldi xl,low(vetor)  ;vector init in SRAM (parameters to clrbitvet)
-	ldi yl,lb_index    ;vector size in bits (parameters to clrbitvet)
-	ldi yh,hb_index    ;vector size in bits (parameters to clrbitvet)
-	rcall clrbitvet
 
 	rjmp PC
 ;
@@ -95,9 +87,8 @@ Reset:
 	ldi rmp,high(RAMEND)
 	out SPH, rmp
 
-; Init RAM
-	ldi yh, high(SRAM_START)	
-	ldi yl, low(SRAM_START)
+	ldi e2proml, 0x00
+	ldi e2promh, 0x00
 
 	rjmp Main
 ;
@@ -112,15 +103,18 @@ ctabits1: ;find how many 1 there are in the vector
 	ldi aux2,0
 	ldi yh,0x00
 	ldi yl,0x00
-		
+
+	mov e2promh,xh
+	mov e2proml,xl
 
 	ctabits1_loop:
-		ld r17,X+
+		rcall rdbyte
+		adiw e2promh:e2proml, 1
 
 		ldi aux3,8  ;1 byte
 		ctabits1_loop_byte:
 			clc
-			rol r17
+			rol r16
 			adc yl,aux2 ;aux2 = 0
 			adc yh,aux2 ;aux2 = 0
 
@@ -134,35 +128,40 @@ ret
 ;
 ;
 clrbitvet: ; reset vector 
-	mov zh,xh
-	mov zl,xl
-	
+	mov e2promh,xh
+	mov e2proml,xl
+
 	rcall findbit
 
 	ldi aux1,0x00
 
-	cp zl,xl
+	cp e2proml,xl
 	brne clrbitvet_loop
-	cp zh,xh
+	cp e2promh,xh
 	brne clrbitvet_loop
 
 	rjmp clrbitvet_jump
 
 	clrbitvet_loop:
-		st Z+,aux1 ;reset all values of vector
-		cp zl,xl
+		mov r16,aux1
+		rcall wtbyte ;reset all values of vector
+		adiw e2promh:e2proml, 1
+
+		cp e2proml,xl
 		brne clrbitvet_loop
-		cp zh,xh
+		cp e2promh,xh
 		brne clrbitvet_loop
 	clrbitvet_jump:
 
-	mov aux2,r17;Mask
+	;neste ponto, e2prom=X
+	mov r16,r17 ;pega valor calculado em findbit
+	mov aux2,r16;Mask
 	com aux2
 	sec
 	clrbitvet_loop2:
-		LD r17,X
-		and r17,aux2
-		st X,r17
+		rcall rdbyte
+		and r16,aux2
+		rcall wtbyte
 		rol aux2
 		cpi aux2,0xFF
 		brne clrbitvet_loop2
@@ -170,18 +169,17 @@ ret
 ;
 ;
 ;
-toram:
+toe2prom:
 	ldi zh,high(vetorflash*2); multiplied by 2 for bytewise access
 	ldi zl,low(vetorflash*2) ; multiplied by 2 for bytewise access
-	ldi xh,high(vetor)
-	ldi xl,low(vetor)
 
-	ldi r16,vetor_sz
-	toram_loop:
-		lpm r17,Z+
-		st X+,r17
-		dec r16
-		brne toram_loop
+	ldi aux1,vetor_sz
+	toe2prom_loop:
+		lpm r16,Z+
+		rcall wtbyte
+		adiw e2promh:e2proml,0x01
+		dec aux1
+		brne toe2prom_loop
 ret
 ;
 ;
@@ -212,13 +210,11 @@ findbit:   ;input : vector adress,index [vector]
 	ldi aux2,0x01  ;useless
 	ror aux2
 
-
 		findbit_index_loop: ;find index value of the bit in the byte 
 			rol aux2
 			dec r17
 			clc
 		brne findbit_index_loop
-		
 
 		mov r17,aux2  ;byte index
 ret
@@ -226,43 +222,92 @@ ret
 ;
 ;
 setbit: ;given the index of the bits change it to 1
+	rcall findbit
+	mov r16,r17
 
-rcall findbit
-	mov aux2,r17;Mask
-	LD r17,X
-	or r17,aux2
-	st X,r17
+	mov aux2,r16;Mask
+	rcall rdbyte
+	or r16,aux2
+	rcall wtbyte
 ret
 ;
 ;
 ;
 clrbit :
+	rcall findbit
+	mov r16,r17
 
-rcall findbit
-	mov aux2,r17;Mask
+	mov aux2,r16;Mask
 	com aux2
-	LD r17,X
-	and r17,aux2
-	st X,r17
+	rcall rdbyte
+	and r16,aux2
+	rcall wtbyte
 ret
 ;
 ;
 ;
 tstbit:
-	
-rcall findbit
-	mov aux2,r17;Mask
-	ld r17,X
-	and r17,aux2
+	rcall findbit
+	mov r16,r17
 
-cpi r17,0x00
-breq tstbit_sai
-set
-ret
+	mov aux2,r16;Mask
+	rcall rdbyte
+	and r16,aux2
 
-tstbit_sai:
-clt
+	cpi r16,0x00
+	breq tstbit_sai
+	set
+	ret
+
+	tstbit_sai:
+	clt
 ret
+;
+;
+;
+;
+;********************************************************************************
+
+;wtbyte		;rotina para escrever um byte na EEPROM
+            ;parametros de entrada:
+			; r25, r24 (high, low) endereco do byte a ser escrito
+			; r16 byte a ser escrito
+			; altera EECR, EEARH, EEARL
+;********************************************************************	
+
+wtbyte:
+	sbic EECR,EEPE           ;Wait for completion of previous write
+	rjmp wtbyte
+	out EEARH, R25            ;Set up address (r25:r24) in address register
+	out EEARL, R24
+	out EEDR,r16               ; Write data (r16) to Data Register
+	cli                        ; disable interrupts
+	sbi EECR,EEMPE             ; Write logical one to EEMPE
+	sbi EECR,EEPE              ; Start eeprom write by setting EEPE
+	sei                         ; enable interrupts
+	ret
+
+
+
+;********************************************************************************
+;   rdbyte: rotina para ler um byte  da eeprom
+; 	parametro de  entrada: r25:r24   endereço (high,low) na eeprom do byte a ser lido 
+;	parametro de saida:	   r16   byte a ser lido
+;   destroi: nenhum
+;********************************************************************************
+
+rdbyte:
+    sbic EECR,EEPE    ; Wait for completion of previous write
+    rjmp rdbyte 
+    out EEARH, R25     ; Set up address (r25:r24) in address register
+    out EEARL, R24
+    sbi EECR,EERE      ; Start eeprom read by writing EERE
+    in r16,EEDR         ; Read data from Data Register
+    ret
+
+;********************************************************************************
+
+
 
 
 vetorflash: .db 0x05, 0xFF,0x0F

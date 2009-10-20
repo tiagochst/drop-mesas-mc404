@@ -19,25 +19,26 @@
   <FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.map</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <vetor><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>38</LINE></vetor>
-  <Reset><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>91</LINE></Reset>
-  <Main><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>46</LINE></Main>
-  <toram><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>173</LINE></toram>
-  <clrbitvet><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>136</LINE></clrbitvet>
-  <setbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>228</LINE></setbit>
-  <clrbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>239</LINE></clrbit>
-  <tstbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>251</LINE></tstbit>
-  <ctabits1><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>109</LINE></ctabits1>
-  <ctabits1_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>117</LINE></ctabits1_loop>
-  <ctabits1_loop_byte><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>121</LINE></ctabits1_loop_byte>
-  <findbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>189</LINE></findbit>
-  <clrbitvet_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>151</LINE></clrbitvet_loop>
-  <clrbitvet_jump><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>157</LINE></clrbitvet_jump>
-  <clrbitvet_loop2><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>162</LINE></clrbitvet_loop2>
-  <vetorflash><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>268</LINE></vetorflash>
-  <toram_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>180</LINE></toram_loop>
-  <findbit_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>197</LINE></findbit_loop>
-  <findbit_index_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>216</LINE></findbit_index_loop>
-  <tstbit_sai><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>263</LINE></tstbit_sai>
+  <Reset><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>88</LINE></Reset>
+  <Main><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>43</LINE></Main>
+  <toe2prom><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>177</LINE></toe2prom>
+  <clrbitvet><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>135</LINE></clrbitvet>
+  <setbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>229</LINE></setbit>
+  <clrbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>241</LINE></clrbit>
+  <tstbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>254</LINE></tstbit>
+  <ctabits1><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>105</LINE></ctabits1>
+  <ctabits1_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>115</LINE></ctabits1_loop>
+  <rdbyte><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>304</LINE></rdbyte>
+  <ctabits1_loop_byte><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>120</LINE></ctabits1_loop_byte>
+  <findbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>192</LINE></findbit>
+  <clrbitvet_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>150</LINE></clrbitvet_loop>
+  <clrbitvet_jump><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>159</LINE></clrbitvet_jump>
+  <wtbyte><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>283</LINE></wtbyte>
+  <clrbitvet_loop2><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>166</LINE></clrbitvet_loop2>
+  <vetorflash><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>318</LINE></vetorflash>
+  <toe2prom_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>182</LINE></toe2prom_loop>
+  <findbit_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>200</LINE></findbit_loop>
+  <findbit_index_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>218</LINE></findbit_index_loop>
+  <tstbit_sai><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>267</LINE></tstbit_sai>
  </LABELS>
 </ASSEMBLER_INFO>
