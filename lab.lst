@@ -1,0 +1,413 @@
+
+AVRASM ver. 2.1.30  C:\Users\Tiago\Desktop\MC404\lab1\lab.asm Mon Oct 26 17:16:06 2009
+
+C:\Users\Tiago\Desktop\MC404\lab1\lab.asm(10): Including file 'C:\Program Files\Atmel\AVR Tools\AvrAssembler2\Appnotes\m88def.inc'
+                 
+                 
+                 ; * [Atividade 1 MC404 - Unicamp]             *
+                 ; * [Class project]                           *
+                 ; * (C)2009 by Alexandre Nobuo Kunieda 080523 *   
+                 ; *            Tiago Cheadraoui Silva  082941 *
+                 ; *********************************************
+                 ;
+                 ; Included header file for target AVR type
+                 .LIST
+                 ;
+                 ; ============================================
+                 ;   R E G I S T E R   D E F I N I T I O N S
+                 ; ============================================
+                 ;
+                 ; [Add all register names here, include info on
+                 ;  all used registers without specific names]
+                 .DEF rmp = R16
+                 .DEF e2proml = R24
+                 .DEF e2promh = R25
+                 .DEF output = R19
+                 .DEF aux1 = R20
+                 .DEF aux2 = R21
+                 .DEF aux3 = R22
+                 .DEF aux4 = R23
+                 ;
+                 ;
+                 .equ vetorflash_sz=3
+                 ;
+                 .equ vetor_sz=vetorflash_sz
+                 .equ hb_index = 0x00
+                 .equ lb_index = 0x0F
+                 ;
+                 ; ============================================
+                 ;         P R O G R A M    L O O P
+                 ; ============================================
+                 ;
+000000 c019      rjmp Reset
+                 Main:
+000001 d04c      	rcall toe2prom
+                 
+000002 e0b0      	ldi xh,0x00      ;XX vector init in SRAM (parameters to clrbitvet)
+000003 e0a0      	ldi xl,0x00      ;XX vector init in SRAM (parameters to clrbitvet)
+000004 e0cf      	ldi yl,lb_index  ;vector size in bits (parameters to clrbitvet)
+000005 e0d0      	ldi yh,hb_index  ;vector size in bits (parameters to clrbitvet)
+000006 d02c      	rcall clrbitvet
+                 
+                 
+000007 e0b0      	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+000008 e0a0      	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+000009 e0c8      	ldi yl,0x08        ;position to find  (parameters to setbit)
+00000a e0d0      	ldi yh,0x00        ;position to find (parameters to setbit)
+00000b d063      	rcall setbit
+                 
+00000c e0b0      	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+00000d e0a0      	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+00000e e0cf      	ldi yl,lb_index       ;position to find  (parameters to clrbit)
+00000f e0d0      	ldi yh,hb_index        ;position to find (parameters to clrbit)
+000010 d065      	rcall clrbit 
+                 
+000011 e0b0      	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+000012 e0a0      	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+000013 e0cf      	ldi yl,lb_index        ;position to find  (parameters to clrbit)
+000014 e0d0      	ldi yh,hb_index        ;position to find (parameters to clrbit)
+000015 d068      	rcall tstbit
+                 
+000016 e0b0      	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+000017 e0a0      	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+000018 d008      	rcall ctabits1
+                 	
+000019 cfff      	rjmp PC
+                 ;
+                 ;
+                 ; ============================================
+                 ;     M A I N    P R O G R A M    I N I T
+                 ; ============================================
+                 ;
+                 Reset:
+                 ; Init stack
+00001a ef0f      	ldi rmp, LOW(RAMEND) ; Init LSB stack
+00001b bf0d      	out SPL,rmp
+00001c e004      	ldi rmp,high(RAMEND)
+00001d bf0e      	out SPH, rmp
+                 
+00001e e080      	ldi e2proml, 0x00
+00001f e090      	ldi e2promh, 0x00
+                 
+000020 cfe0      	rjmp Main
+                 ;
+                 ; ============================================
+                 ;              F U N C T I O N S
+                 ; ============================================
+                 ;
+                 ;
+                 
+                 ;********************************************************************************
+                 ;ctabits1	;given a the inicial vector's address
+                             ;count how many bits ones is there in the vector 
+                             ;input:
+                 			; xh:xl:eeprom's address init 
+                             ;output:
+                 			;yh,:yl: number of ones
+                 			; changes aux1,aux2,e2promh,e2proml,r16,aux3
+                 ;********************************************************************************
+                 ctabits1: ;find how many 1 there are in the vector 
+                 
+000021 e043      	ldi aux1,vetor_sz
+000022 e050      	ldi aux2,0
+000023 e0d0      	ldi yh,0x00
+000024 e0c0      	ldi yl,0x00
+                 
+000025 2f9b      	mov e2promh,xh
+000026 2f8a      	mov e2proml,xl
+                 
+                 	ctabits1_loop:
+000027 d06b      		rcall rdbyte
+000028 9601      		adiw e2promh:e2proml, 1
+                 
+000029 e068      		ldi aux3,8  ;1 byte
+                 		ctabits1_loop_byte:
+00002a 9488      			clc
+00002b 1f00      			rol r16
+00002c 1fc5      			adc yl,aux2 ;aux2 = 0
+00002d 1fd5      			adc yh,aux2 ;aux2 = 0
+                 
+00002e 956a      			dec aux3
+00002f f7d1      			brne ctabits1_loop_byte
+                 
+000030 954a      		dec aux1
+000031 f7a9      		brne ctabits1_loop
+000032 9508      ret
+                 ;
+                 ;
+                 ;
+                 ;********************************************************************************
+                 ;clrbitvet	;given a length of the vector plus its inicial address
+                             ;every bit is cleared through the initial address 
+                 			;and the address added by the length
+                             ;input:
+                 			; yh:yl:vector length 
+                 			; xh:xl:eeprom's address init 
+                             ; changes e2promh,e2proml,r16,aux2
+                 ;********************************************************************************
+                 clrbitvet: ; reset vector 
+000033 2f9b      	mov e2promh,xh
+000034 2f8a      	mov e2proml,xl
+                 
+000035 d021      	rcall findbit
+                 
+000036 e040      	ldi aux1,0x00
+                 
+000037 178a      	cp e2proml,xl
+000038 f419      	brne clrbitvet_loop
+000039 179b      	cp e2promh,xh
+00003a f409      	brne clrbitvet_loop
+                 
+00003b c007      	rjmp clrbitvet_jump
+                 
+                 	clrbitvet_loop:
+00003c 2f04      		mov r16,aux1
+00003d d04b      		rcall wtbyte ;reset all values of vector
+00003e 9601      		adiw e2promh:e2proml, 1
+                 
+00003f 178a      		cp e2proml,xl
+000040 f7d9      		brne clrbitvet_loop
+000041 179b      		cp e2promh,xh
+000042 f7c9      		brne clrbitvet_loop
+                 	clrbitvet_jump:
+                 
+                 	;neste ponto, e2prom=X
+000043 2f01      	mov r16,r17 ;pega valor calculado em findbit
+000044 2f50      	mov aux2,r16;Mask
+000045 9550      	com aux2
+000046 9408      	sec
+                 	clrbitvet_loop2:
+000047 d04b      		rcall rdbyte
+000048 2305      		and r16,aux2
+000049 d03f      		rcall wtbyte
+00004a 1f55      		rol aux2
+00004b 3f5f      		cpi aux2,0xFF
+00004c f7d1      		brne clrbitvet_loop2
+00004d 9508      ret
+                 ;
+                 ;
+                 ;
+                 toe2prom:
+00004e e0f1      	ldi zh,high(vetorflash*2); multiplied by 2 for bytewise access
+00004f e3e4      	ldi zl,low(vetorflash*2) ; multiplied by 2 for bytewise access
+                 
+000050 e043      	ldi aux1,vetor_sz
+                 	toe2prom_loop:
+000051 9105      		lpm r16,Z+
+000052 d036      		rcall wtbyte
+000053 9601      		adiw e2promh:e2proml,0x01
+000054 954a      		dec aux1
+000055 f7d9      		brne toe2prom_loop
+000056 9508      ret
+                 ;
+                 ;
+                 ;
+                 ;********************************************************************************
+                 ;find	    ;given the index of the bit in the vector and the init address of eemprom
+                             ;find the bit and put an index (r17) of the bit in its byte 
+                             ;input:
+                 			; yh:hl:index of the bit 
+                 			; xh:xl:eeprom's address init 
+                             ;output:
+                 			; r17 index of the bit in its byte
+                 			; changes aux1,aux2,aux3,aux4,r17
+                 ;********************************************************************************
+                 findbit:   ;input : vector adress,index [vector]
+                 		   ;output : bytes adress, index [byte]
+                 
+000057 2f4c      	mov aux1,yl  ;used for byte index
+000058 e050      	ldi aux2,0  ;useless
+000059 e063      	ldi aux3,3  ;loop
+00005a e071      	ldi aux4,0x01 ;compare and skiping  
+                 		
+                 		findbit_loop: ;find position of vector in bytes 
+00005b 9488      			clc
+00005c 95d7      			ror yh
+00005d 95c7      			ror yl
+00005e 956a      			dec aux3
+00005f f7d9      		brne findbit_loop
+                 
+000060 0fac      	add xl,yl ;byte init position in SRAM
+000061 1fbd      	adc xh,yh  ;byte init position in SRAM
+                 
+000062 7047      	ANDI aux1,0x07 ;0x07 used as bit mask
+000063 e017      	ldi r17,7
+000064 1b14      	sub r17,aux1
+000065 9513      	inc r17
+000066 9488      	clc
+000067 e051      	ldi aux2,0x01  ;useless
+000068 9557      	ror aux2
+                 
+                 		findbit_index_loop: ;find index value of the bit in the byte 
+000069 1f55      			rol aux2
+00006a 951a      			dec r17
+00006b 9488      			clc
+00006c f7e1      		brne findbit_index_loop
+                 
+00006d 2f15      		mov r17,aux2  ;byte index
+00006e 9508      ret
+                 ;
+                 ;
+                 ;
+                 
+                 ;********************************************************************************
+                 ;setbit	    ;given the index of the bits change it to 1
+                             ;input:
+                 			; yh:hl:index of the bit 
+                 			; changes r16,aux2
+                 ;********************************************************************************
+                 setbit:
+00006f dfe7      	rcall findbit
+000070 2f01      	mov r16,r17
+                 
+000071 2f50      	mov aux2,r16;Mask
+000072 d020      	rcall rdbyte
+000073 2b05      	or r16,aux2
+000074 d014      	rcall wtbyte
+000075 9508      ret
+                 ;
+                 ;
+                 ;
+                 ;********************************************************************************
+                 ;clrbit		;clear one bit in EEPROM
+                             ;input:
+                 			; yh:hl:index of the bit 
+                 			; changes r16,aux2
+                 ;********************************************************************************	
+                 clrbit :
+000076 dfe0      	rcall findbit
+000077 2f01      	mov r16,r17
+                 
+000078 2f50      	mov aux2,r16;Mask
+000079 9550      	com aux2
+00007a d018      	rcall rdbyte
+00007b 2305      	and r16,aux2
+00007c d00c      	rcall wtbyte
+00007d 9508      ret
+                 ;
+                 ;
+                 ;
+                 ;********************************************************************************
+                 ;tstbit 	;copy to the register T the bit of a given index
+                             ;input:
+                 			; yh:hl:index of the bit 
+                 			; changes r16,aux2
+                 ;********************************************************************************
+                 tstbit:
+00007e dfd8      	rcall findbit
+00007f 2f01      	mov r16,r17
+                 
+000080 2f50      	mov aux2,r16;Mask
+000081 d011      	rcall rdbyte
+000082 2305      	and r16,aux2
+                 
+000083 3000      	cpi r16,0x00
+000084 f011      	breq tstbit_sai
+000085 9468      	set
+000086 9508      	ret
+                 
+                 	tstbit_sai:
+000087 94e8      	clt
+000088 9508      ret
+                 ;
+                 ;
+                 ;
+                 ;
+                 ;********************************************************************************
+                 
+                 ;wtbyte		;write one byte in EEPROM
+                             ;input:
+                 			; r25, r24 (high, low) byte's address to be written
+                 			; r16 byte to be written
+                 			; changes EECR, EEARH, EEARL
+                 ;********************************************************************	
+                 
+                 wtbyte:
+000089 99f9      	sbic EECR,EEPE           ;Wait for completion of previous write
+00008a cffe      	rjmp wtbyte
+00008b bd92      	out EEARH, R25            ;Set up address (r25:r24) in address register
+00008c bd81      	out EEARL, R24
+00008d bd00      	out EEDR,r16               ; Write data (r16) to Data Register
+00008e 94f8      	cli                        ; disable interrupts
+00008f 9afa      	sbi EECR,EEMPE             ; Write logical one to EEMPE
+000090 9af9      	sbi EECR,EEPE              ; Start eeprom write by setting EEPE
+000091 9478      	sei                         ; enable interrupts
+000092 9508      	ret
+                 
+                 
+                 
+                 ;********************************************************************************
+                 ;   rdbyte: read one byte in eeprom
+                 ; 	input: r25:r24   eeprom's address(high,low) of the byte to be read  
+                 ;	output:	   r16   read byte 
+                 ;   detroy: none
+                 ;********************************************************************************
+                 
+                 rdbyte:
+000093 99f9          sbic EECR,EEPE      ; Wait for completion of previous write
+000094 cffe          rjmp rdbyte 
+000095 bd92          out EEARH, R25      ; Set up address (r25:r24) in address register
+000096 bd81          out EEARL, R24
+000097 9af8          sbi EECR,EERE       ; Start eeprom read by writing EERE
+000098 b500          in r16,EEDR         ; Read data from Data Register
+000099 9508          ret
+                 
+                 ;********************************************************************************
+                 
+                 vetorflash:
+00009a ff05
+00009b 080f      .db 0x05, 0xFF,0x0F,0x08
+
+
+RESOURCE USE INFORMATION
+------------------------
+
+Notice:
+The register and instruction counts are symbol table hit counts,
+and hence implicitly used resources are not counted, eg, the
+'lpm' instruction without operands implicitly uses r0 and z,
+none of which are counted.
+
+x,y,z are separate entities in the symbol table and are
+counted separately from r26..r31 here.
+
+.dseg memory usage only counts static data declared with .byte
+
+ATmega88 register use summary:
+r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 r5 :   0 r6 :   0 r7 :   0 
+r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 r13:   0 r14:   0 r15:   0 
+r16:  22 r17:   9 r18:   0 r19:   0 r20:   9 r21:  20 r22:   4 r23:   1 
+r24:  10 r25:  10 r26:  10 r27:  10 r28:   9 r29:   8 r30:   1 r31:   1 
+x  :   0 y  :   0 z  :   1 
+Registers used: 15 out of 35 (42.9%)
+
+ATmega88 instruction use summary:
+.lds  :   0 .sts  :   0 adc   :   3 add   :   1 adiw  :   3 and   :   3 
+andi  :   1 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   1 brge  :   0 brhc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
+brne  :  10 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 cbi   :   0 cbr   :   0 clc   :   4 
+clh   :   0 cli   :   1 cln   :   0 clr   :   0 cls   :   0 clt   :   1 
+clv   :   0 clz   :   0 com   :   2 cp    :   4 cpc   :   0 cpi   :   2 
+cpse  :   0 dec   :   5 eor   :   0 fmul  :   0 fmuls :   0 fmulsu:   0 
+icall :   0 ijmp  :   0 in    :   1 inc   :   1 ld    :   0 ldd   :   0 
+ldi   :  36 lds   :   0 lpm   :   1 lsl   :   0 lsr   :   0 mov   :  15 
+movw  :   0 mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 
+or    :   1 ori   :   0 out   :   7 pop   :   0 push  :   0 rcall :  20 
+ret   :  10 reti  :   0 rjmp  :   6 rol   :   3 ror   :   3 sbc   :   0 
+sbci  :   0 sbi   :   3 sbic  :   2 sbis  :   0 sbiw  :   0 sbr   :   0 
+sbrc  :   0 sbrs  :   0 sec   :   1 seh   :   0 sei   :   1 sen   :   0 
+ser   :   0 ses   :   0 set   :   1 sev   :   0 sez   :   0 sleep :   0 
+spm   :   0 st    :   0 std   :   0 sts   :   0 sub   :   1 subi  :   0 
+swap  :   0 tst   :   0 wdr   :   0 
+Instructions used: 32 out of 111 (28.8%)
+
+ATmega88 memory use summary [bytes]:
+Segment   Begin    End      Code   Data   Used    Size   Use%
+---------------------------------------------------------------
+[.cseg] 0x000000 0x000138    308      4    312    8192   3.8%
+[.dseg] 0x000100 0x000100      0      0      0    1024   0.0%
+[.eseg] 0x000000 0x000000      0      0      0     512   0.0%
+
+Assembly complete, 0 errors, 0 warnings

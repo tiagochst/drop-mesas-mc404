@@ -16,7 +16,6 @@
 ;
 ; [Add all register names here, include info on
 ;  all used registers without specific names]
-; Format: .DEF rmp = R16
 .DEF rmp = R16
 .DEF e2proml = R24
 .DEF e2promh = R25
@@ -25,11 +24,9 @@
 .DEF aux2 = R21
 .DEF aux3 = R22
 .DEF aux4 = R23
-
-
 ;
 ;
-.equ vetorflash_sz=3
+.equ vetorflash_sz=4
 ;
 .equ vetor_sz=vetorflash_sz
 .equ hb_index = 0x00
@@ -43,8 +40,8 @@ rjmp Reset
 Main:
 	rcall toe2prom
 
-	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
-	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+	ldi xh,0x00      ;XX vector init in SRAM (parameters to clrbitvet)
+	ldi xl,0x00      ;XX vector init in SRAM (parameters to clrbitvet)
 	ldi yl,lb_index  ;vector size in bits (parameters to clrbitvet)
 	ldi yh,hb_index  ;vector size in bits (parameters to clrbitvet)
 	rcall clrbitvet
@@ -72,7 +69,6 @@ Main:
 	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
 	rcall ctabits1
 	
-
 	rjmp PC
 ;
 ;
@@ -97,6 +93,16 @@ Reset:
 ; ============================================
 ;
 ;
+
+;********************************************************************************
+;ctabits1	;given a the inicial vector's address
+            ;count how many bits ones is there in the vector 
+            ;input:
+			; xh:xl:eeprom's address init 
+            ;output:
+			;yh,:yl: number of ones
+			; changes aux1,aux2,e2promh,e2proml,r16,aux3
+;********************************************************************************
 ctabits1: ;find how many 1 there are in the vector 
 
 	ldi aux1,vetor_sz
@@ -127,6 +133,15 @@ ret
 ;
 ;
 ;
+;********************************************************************************
+;clrbitvet	;given a length of the vector plus its inicial address
+            ;every bit is cleared through the initial address 
+			;and the address added by the length
+            ;input:
+			; yh:yl:vector length 
+			; xh:xl:eeprom's address init 
+            ; changes e2promh,e2proml,r16,aux2
+;********************************************************************************
 clrbitvet: ; reset vector 
 	mov e2promh,xh
 	mov e2proml,xl
@@ -184,6 +199,16 @@ ret
 ;
 ;
 ;
+;********************************************************************************
+;find	    ;given the index of the bit in the vector and the init address of eemprom
+            ;find the bit and put an index (r17) of the bit in its byte 
+            ;input:
+			; yh:hl:index of the bit 
+			; xh:xl:eeprom's address init 
+            ;output:
+			; r17 index of the bit in its byte
+			; changes aux1,aux2,aux3,aux4,r17
+;********************************************************************************
 findbit:   ;input : vector adress,index [vector]
 		   ;output : bytes adress, index [byte]
 
@@ -221,7 +246,14 @@ ret
 ;
 ;
 ;
-setbit: ;given the index of the bits change it to 1
+
+;********************************************************************************
+;setbit	    ;given the index of the bits change it to 1
+            ;input:
+			; yh:hl:index of the bit 
+			; changes r16,aux2
+;********************************************************************************
+setbit:
 	rcall findbit
 	mov r16,r17
 
@@ -233,6 +265,12 @@ ret
 ;
 ;
 ;
+;********************************************************************************
+;clrbit		;clear one bit in EEPROM
+            ;input:
+			; yh:hl:index of the bit 
+			; changes r16,aux2
+;********************************************************************************	
 clrbit :
 	rcall findbit
 	mov r16,r17
@@ -246,6 +284,12 @@ ret
 ;
 ;
 ;
+;********************************************************************************
+;tstbit 	;copy to the register T the bit of a given index
+            ;input:
+			; yh:hl:index of the bit 
+			; changes r16,aux2
+;********************************************************************************
 tstbit:
 	rcall findbit
 	mov r16,r17
@@ -268,11 +312,11 @@ ret
 ;
 ;********************************************************************************
 
-;wtbyte		;rotina para escrever um byte na EEPROM
-            ;parametros de entrada:
-			; r25, r24 (high, low) endereco do byte a ser escrito
-			; r16 byte a ser escrito
-			; altera EECR, EEARH, EEARL
+;wtbyte		;write one byte in EEPROM
+            ;input:
+			; r25, r24 (high, low) byte's address to be written
+			; r16 byte to be written
+			; changes EECR, EEARH, EEARL
 ;********************************************************************	
 
 wtbyte:
@@ -290,24 +334,21 @@ wtbyte:
 
 
 ;********************************************************************************
-;   rdbyte: rotina para ler um byte  da eeprom
-; 	parametro de  entrada: r25:r24   endereço (high,low) na eeprom do byte a ser lido 
-;	parametro de saida:	   r16   byte a ser lido
-;   destroi: nenhum
+;   rdbyte: read one byte in eeprom
+; 	input: r25:r24   eeprom's address(high,low) of the byte to be read  
+;	output:	   r16   read byte 
+;   detroy: none
 ;********************************************************************************
 
 rdbyte:
-    sbic EECR,EEPE    ; Wait for completion of previous write
+    sbic EECR,EEPE      ; Wait for completion of previous write
     rjmp rdbyte 
-    out EEARH, R25     ; Set up address (r25:r24) in address register
+    out EEARH, R25      ; Set up address (r25:r24) in address register
     out EEARL, R24
-    sbi EECR,EERE      ; Start eeprom read by writing EERE
+    sbi EECR,EERE       ; Start eeprom read by writing EERE
     in r16,EEDR         ; Read data from Data Register
     ret
 
 ;********************************************************************************
 
-
-
-
-vetorflash: .db 0x05, 0xFF,0x0F
+vetorflash:.db 0x05, 0xFF,0x0F,0x08
