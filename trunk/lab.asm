@@ -125,7 +125,7 @@ ctabits1: ;find how many 1 there are in the vector
 			dec aux3
 			brne ctabits1_loop_byte
 
-		dec aux1
+		dec aux1      ;number of missign bytes to be visited
 		brne ctabits1_loop
 ret
 ;
@@ -290,9 +290,9 @@ ret
 ;********************************************************************************
 tstbit:
 	rcall findbit
-	mov r16,r17
+	mov r16,r17  ;copy index to r16 
 
-	mov aux2,r16;Mask
+	mov aux2,r16 ;Mask
 	rcall rdbyte
 	and r16,aux2
 
@@ -309,7 +309,6 @@ ret
 ;
 ;
 ;********************************************************************************
-
 ;wtbyte		;write one byte in EEPROM
             ;input:
 			; r25, r24 (high, low) byte's address to be written
