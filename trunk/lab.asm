@@ -40,33 +40,33 @@ rjmp Reset
 Main:
 	rcall toe2prom
 
-	ldi xh,0x00      ;XX vector init in SRAM (parameters to clrbitvet)
-	ldi xl,0x00      ;XX vector init in SRAM (parameters to clrbitvet)
+	ldi xh,0x00      ;vector init in eeprom (parameters to clrbitvet)
+	ldi xl,0x00      ;vector init in eeprom(parameters to clrbitvet)
 	ldi yl,lb_index  ;vector size in bits (parameters to clrbitvet)
 	ldi yh,hb_index  ;vector size in bits (parameters to clrbitvet)
 	rcall clrbitvet
 
 
-	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
-	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+	ldi xh,0x00        ;vector init in eeprom (parameters to setbit)
+	ldi xl,0x00        ;vector init in eeprom (parameters to setbit)
 	ldi yl,0x08        ;position to find  (parameters to setbit)
 	ldi yh,0x00        ;position to find (parameters to setbit)
 	rcall setbit
 
-	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
-	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
-	ldi yl,lb_index       ;position to find  (parameters to clrbit)
-	ldi yh,hb_index        ;position to find (parameters to clrbit)
+	ldi xh,0x00        ;vector init in eeprom (parameters to clrbitvet)
+	ldi xl,0x00        ;vector init in eeprom (parameters to clrbitvet)
+	ldi yl,lb_index    ;position to find  (parameters to clrbit)
+	ldi yh,hb_index    ;position to find (parameters to clrbit)
 	rcall clrbit 
 
-	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
-	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
-	ldi yl,lb_index        ;position to find  (parameters to clrbit)
-	ldi yh,hb_index        ;position to find (parameters to clrbit)
+	ldi xh,0x00        ; vector init in eeprom (parameters to clrbitvet)
+	ldi xl,0x00        ; vector init in eeprom (parameters to clrbitvet)
+	ldi yl,lb_index    ;position to find  (parameters to clrbit)
+	ldi yh,hb_index    ;position to find (parameters to clrbit)
 	rcall tstbit
 
-	ldi xh,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
-	ldi xl,0x00   ;XX vector init in SRAM (parameters to clrbitvet)
+	ldi xh,0x00        ; vector init in eeprom (parameters to clrbitvet)
+	ldi xl,0x00        ; vector init in eeprom (parameters to clrbitvet)
 	rcall ctabits1
 	
 	rjmp PC
@@ -80,11 +80,11 @@ Reset:
 ; Init stack
 	ldi rmp, LOW(RAMEND) ; Init LSB stack
 	out SPL,rmp
-	ldi rmp,high(RAMEND)
+	ldi rmp,high(RAMEND) ; Init LSB stack
 	out SPH, rmp
 
-	ldi e2proml, 0x00
-	ldi e2promh, 0x00
+	ldi e2proml, 0x00     ;eeprom address init
+	ldi e2promh, 0x00     ;eeprom address init
 
 	rjmp Main
 ;
@@ -93,7 +93,6 @@ Reset:
 ; ============================================
 ;
 ;
-
 ;********************************************************************************
 ;ctabits1	;given a the inicial vector's address
             ;count how many bits ones is there in the vector 
@@ -107,23 +106,22 @@ ctabits1: ;find how many 1 there are in the vector
 
 	ldi aux1,vetor_sz
 	ldi aux2,0
-	ldi yh,0x00
-	ldi yl,0x00
+	ldi yh,0x00  ;reset number of bits one
+	ldi yl,0x00  ;reset number of bits one
 
 	mov e2promh,xh
 	mov e2proml,xl
 
 	ctabits1_loop:
-		rcall rdbyte
+		rcall rdbyte          ;put the byte in r16
 		adiw e2promh:e2proml, 1
 
-		ldi aux3,8  ;1 byte
-		ctabits1_loop_byte:
+		ldi aux3,8            ;1 byte
+		ctabits1_loop_byte:   ;get every bit of the byte and put in carry
 			clc
 			rol r16
 			adc yl,aux2 ;aux2 = 0
 			adc yh,aux2 ;aux2 = 0
-
 			dec aux3
 			brne ctabits1_loop_byte
 
