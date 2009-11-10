@@ -28,7 +28,7 @@
 ;
 .equ vetor_sz = vetorflash_sz
 .equ hb_index = 0x00
-.equ lb_index = 0x0F
+.equ lb_index = 0x1F
 ;
 ; ============================================
 ;           M A I N    P R O G R A M
@@ -38,23 +38,6 @@ rjmp Reset
 Main:
 	rcall toe2prom
 
-	ldi xh,0x00      ; vector init in eeprom (parameters to clrbitvet)
-	ldi xl,0x00      ; vector init in eeprom (parameters to clrbitvet)
-	ldi yl,lb_index  ; vector size in bits (parameters to clrbitvet)
-	ldi yh,hb_index  ; vector size in bits (parameters to clrbitvet)
-	rcall clrbitvet
-
-	ldi xh,0x00      ; vector init in eeprom (parameters to setbit)
-	ldi xl,0x00      ; vector init in eeprom (parameters to setbit)
-	ldi yl,0x08      ; position to find (parameters to setbit)
-	ldi yh,0x00      ; position to find (parameters to setbit)
-	rcall setbit
-
-	ldi xh,0x00      ; vector init in eeprom (parameters to clrbit)
-	ldi xl,0x00      ; vector init in eeprom (parameters to clrbit)
-	ldi yl,lb_index  ; position to find (parameters to clrbit)
-	ldi yh,hb_index  ; position to find (parameters to clrbit)
-	rcall clrbit 
 
 	ldi xh,0x00      ; vector init in eeprom (parameters to tstbit)
 	ldi xl,0x00      ; vector init in eeprom (parameters to tstbit)
@@ -62,9 +45,35 @@ Main:
 	ldi yh,hb_index  ; position to find (parameters to tstbit)
 	rcall tstbit
 
+	ldi xh,0x00      ; vector init in eeprom (parameters to clrbit)
+	ldi xl,0x00      ; vector init in eeprom (parameters to clrbit)
+	ldi yl,lb_index  ; position to find (parameters to clrbit)
+	ldi yh,hb_index  ; position to find (parameters to clrbit)
+	rcall clrbit 
+
+
+	ldi xh,0x00      ; vector init in eeprom (parameters to tstbit)
+	ldi xl,0x00      ; vector init in eeprom (parameters to tstbit)
+	ldi yl,lb_index  ; position to find (parameters to tstbit)
+	ldi yh,hb_index  ; position to find (parameters to tstbit)
+	rcall tstbit
+
+
 	ldi xh,0x00      ; vector init in eeprom (parameters to ctabits1)
 	ldi xl,0x00      ; vector init in eeprom (parameters to ctabits1)
 	rcall ctabits1
+
+	ldi xh,0x00      ; vector init in eeprom (parameters to clrbitvet)
+	ldi xl,0x00      ; vector init in eeprom (parameters to clrbitvet)
+	ldi yl,lb_index  ; vector size in bits (parameters to clrbitvet)
+	ldi yh,hb_index  ; vector size in bits (parameters to clrbitvet)
+	;rcall clrbitvet
+
+	ldi xh,0x00      ; vector init in eeprom (parameters to setbit)
+	ldi xl,0x00      ; vector init in eeprom (parameters to setbit)
+	ldi yl,0x1F      ; position to find (parameters to setbit)
+	ldi yh,0x00      ; position to find (parameters to setbit)
+	;rcall setbit
 
 	rjmp PC
 ;
@@ -161,13 +170,14 @@ clrbitvet:
 	mov e2proml,xl
 	rcall findbit
 
+	ldi r16,0x00
+
 	cp e2proml,xl
 	brne clrbitvet_loop
 	cp e2promh,xh
 	brne clrbitvet_loop
 	rjmp clrbitvet_jump
 
-	ldi r16,0x00
 	clrbitvet_loop:
 		rcall wtbyte ; reset all values of vector
 		adiw e2promh:e2proml, 1
@@ -180,16 +190,16 @@ clrbitvet:
 	clrbitvet_jump:
 	; at this point we have e2prom=X
 
+	rcall rdbyte
 	mov aux2,r17 ; r17 was calculated at findbit
 	com aux2     ; generates a bit mask
 	sec
 	clrbitvet_loop2:
-		rcall rdbyte
 		and r16,aux2
-		rcall wtbyte
 		rol aux2
 		cpi aux2,0xFF
 		brne clrbitvet_loop2
+	rcall wtbyte
 ret
 ;
 ;
@@ -249,6 +259,9 @@ ret
 setbit:
 	rcall findbit
 
+	mov e2proml,xl
+	mov e2promh,xh
+
 	rcall rdbyte
 	or r16,r17  ; r17 is a bit mask calculated in findbit
 	rcall wtbyte
@@ -267,6 +280,9 @@ clrbit :
 	rcall findbit
 	com r17
 
+	mov e2proml,xl
+	mov e2promh,xh
+
 	rcall rdbyte
 	and r16,r17
 	rcall wtbyte
@@ -283,6 +299,9 @@ ret
 ;********************************************************************************
 tstbit:
 	rcall findbit
+
+	mov e2proml,xl
+	mov e2promh,xh
 
 	rcall rdbyte
 	and r16,r17  ; r17 is a bit mask calculated in findbit
@@ -340,4 +359,4 @@ ret
 ;
 ;
 ;********************************************************************************
-vetorflash:.db 0x05, 0xFF,0x0F,0x08
+vetorflash:.db 0x08,0x04,0x02,0xFF
