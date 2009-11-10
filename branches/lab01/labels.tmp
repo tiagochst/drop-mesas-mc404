@@ -1,0 +1,45 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.30</VERSION>
+ <DEVICE>ATmega88</DEVICE>
+ <WORKING_DIR>C:\Users\Tiago\Desktop\MC404\lab1</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files\Atmel\AVR Tools\AvrAssembler2\Appnotes</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files\Atmel\AVR Tools\AvrAssembler2\Appnotes\m88def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.map</FILE>
+  <FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.lst</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <Reset><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>79</LINE></Reset>
+  <Main><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>40</LINE></Main>
+  <toe2prom><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>187</LINE></toe2prom>
+  <clrbitvet><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>145</LINE></clrbitvet>
+  <setbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>256</LINE></setbit>
+  <clrbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>274</LINE></clrbit>
+  <tstbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>293</LINE></tstbit>
+  <ctabits1><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>106</LINE></ctabits1>
+  <ctabits1_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>116</LINE></ctabits1_loop>
+  <rdbyte><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>343</LINE></rdbyte>
+  <ctabits1_loop_byte><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>121</LINE></ctabits1_loop_byte>
+  <findbit><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>212</LINE></findbit>
+  <clrbitvet_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>160</LINE></clrbitvet_loop>
+  <clrbitvet_jump><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>169</LINE></clrbitvet_jump>
+  <wtbyte><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>322</LINE></wtbyte>
+  <clrbitvet_loop2><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>176</LINE></clrbitvet_loop2>
+  <vetorflash><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>354</LINE></vetorflash>
+  <toe2prom_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>192</LINE></toe2prom_loop>
+  <findbit_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>220</LINE></findbit_loop>
+  <findbit_index_loop><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>238</LINE></findbit_index_loop>
+  <tstbit_sai><FILE>C:\Users\Tiago\Desktop\MC404\lab1\lab.asm</FILE><LINE>306</LINE></tstbit_sai>
+ </LABELS>
+</ASSEMBLER_INFO>
