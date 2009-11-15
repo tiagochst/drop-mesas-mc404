@@ -50,25 +50,18 @@
 ;
 ;
 
-
-;****************************************************
-;timer0.asm
-;	timer0 overflow interrupt example
-;   simulates a clock: increments a seconds counter every second
-;	Celio G.  MC404	May 2008
-;   Atuakizado em 
-;****************************************************
 .nolist
 .include "m88def.inc"
 .list
 .def    secsct  = r21		;seconds counter
 .def	r	=r16
-.def	i	=r17
-start:
-	rjmp	RESET	;reset handle
+.def	tmp	=r17
 
+rjmp	RESET		;reset handle
+
+.org	0x01
+	rjmp    stop_count	;vetor de interrupção INT0 em 0x01
 .org	0x10
-    ;rjmp timer0		; go to timer0 overflow counter interrupt routine
 	rjmp count1sec		; go to timer0 overflow counter interrupt routine
 
 RESET:
@@ -76,25 +69,35 @@ RESET:
 	out	SPL,r		;initialize Stack Pointer to last RAM address
 	ldi	r,high(RAMEND)
 	out SPH,r
-	;clr secsct		; clear software seconds counter
-	;clr xl			; will use X as an interrupt counter
-	;clr xh
+
+	rcall clockinit
+
+	;não tô entendendo nada
+	ldi r, 1
+	sts PCMSK0, r
+	ldi r, 1
+	sts PCICR, r
+	;cbi ddrb,pb2		; configura p/ entrada no pino 4 (int0)
+	;sbi portb,pb2		; ativa resistor de pull up; deveria colocar o bit PB2 de PINB em 1
+	;ldi r,0
+	;sts EICRA, r		; queremos interromper no nivel baixo do sinal em pb2 (p. 84 datasheet)
+	;sbi eimsk,int0		; habilita interrupção INT0
+	ldi r,1				; sleep power down(SM1=1) & sleep enable SE=1(p 37 datasheet)
+	out SMCR,r			; do it
+	;END não tô entendendo nada
+
 	ldi r,1			; era out TIMSK0,r no Atmega88 este registrador está fora do espaço de E/S!
 	sts TIMSK0,r	; enable timer0 overflow interrupt (p.102 datasheet)
 	ldi r,1			; set prescalong: 1= no prescaling 5=  CK/1024 pre-scaling (p 102-103 datasheet)
 	out TCCR0B,r	; also starts timer0 counting
-	out SMCR,r		; SMCR=1 selects idle mode sleep and enables sleep (p 37-38 datasheet)
-	sei				; Global Interrupt enable
+	sei		; Global Interrupt enable
 
-	rcall clockinit
+loop:
+	ldi r,1			; set prescalong: 1= no prescaling 5=  CK/1024 pre-scaling (p 102-103 datasheet)
+	out TCCR0B,r	; also starts timer0 counting
 
-l0:	sleep			; enter idle mode sleep: wait for interrupt
-	cpi secsct,60	; reached 1 minute ?
-	brne l0			; no, go back to sleep,
-done: 				; yes stop timer0
-    clr r17
-    out TCCR0B,r17	; stop timer0 counter: no more interrupts
-	rjmp PC
+	sleep				; "dorme" no modo power down: só acorda via interrupção externa
+	rjmp loop			; volta a "dormir" após serviço da interrupção
 
 ;**************************************************************
 					; timer0 overflow interrupt routine
@@ -119,11 +122,16 @@ count1sec:
 	rcall clock
 reti
 
+stop_count:				; rotina de interrupcao INT0
+	clr r
+	out TCCR0B, r		; stop timer0 counter: no more interrupts
+reti					; retorna com interrupções habilitadas
+
 clock:
 	ldi yh, high(SRAM_START+6) ;seta Y para o final do cronometro
 	ldi yl, low(SRAM_START+6)
 
-	ldi i, 3
+	ldi tmp, 3
 	clock_loop:
 		ld r, -Y
 		cpi r, '9'
@@ -137,7 +145,7 @@ clock:
 		ldi r, '0'
 		st Y, r
 
-		dec i
+		dec tmp
 	brne clock_loop
 
 	inc_sai:
@@ -151,12 +159,12 @@ chk24h:
 	ldi yh, high(SRAM_START+6) ;seta Y para o final do cronometro
 	ldi yl, low(SRAM_START+6)
 
-	ldi i, 4
+	ldi tmp, 4
 	chk24h_loop:
 		ld r, -Y
 		cpi r, '0'
 		brne sai
-		dec i
+		dec tmp
 	brne chk24h_loop
 
 	ld r, -Y

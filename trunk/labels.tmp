@@ -1,37 +1,36 @@
 <ASSEMBLER_INFO>
- <VERSION>2.1.7</VERSION>
+ <VERSION>2.1.30</VERSION>
  <DEVICE>ATmega88</DEVICE>
- <WORKING_DIR>C:\Documents and Settings\ra082941\Desktop\mc404</WORKING_DIR>
+ <WORKING_DIR>X:\alexandre\mc404\lab2</WORKING_DIR>
  <INCLUDE_PATH>
   <DIR>C:\Arquivos de programas\Atmel\AVR Tools\AvrAssembler2\Appnotes</DIR>
  </INCLUDE_PATH>
- <SOURCE_FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</SOURCE_FILE>
+ <SOURCE_FILE>X:\alexandre\mc404\lab2\lab2.asm</SOURCE_FILE>
  <INCLUDED_FILES>
   <FILE>C:\Arquivos de programas\Atmel\AVR Tools\AvrAssembler2\Appnotes\m88def.inc</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
-  <FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.obj</FILE>
+  <FILE>X:\alexandre\mc404\lab2\lab2.obj</FILE>
  </OBJECT_FILES>
  <HEX_FILES>
-  <FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.hex</FILE>
+  <FILE>X:\alexandre\mc404\lab2\lab2.hex</FILE>
  </HEX_FILES>
  <OUTPUT_FILES>
-  <FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.map</FILE>
+  <FILE>X:\alexandre\mc404\lab2\lab2.map</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <start><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>67</LINE></start>
-  <RESET><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>74</LINE></RESET>
-  <count1sec><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>118</LINE></count1sec>
-  <clockinit><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>177</LINE></clockinit>
-  <l0><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>91</LINE></l0>
-  <done><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>94</LINE></done>
-  <timer0><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>101</LINE></timer0>
-  <n0><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>111</LINE></n0>
-  <clock><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>122</LINE></clock>
-  <clock_loop><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>127</LINE></clock_loop>
-  <inc_sai><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>143</LINE></inc_sai>
-  <chk24h><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>150</LINE></chk24h>
-  <chk24h_loop><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>155</LINE></chk24h_loop>
-  <sai><FILE>C:\Documents and Settings\ra082941\Desktop\mc404\lab2.asm</FILE><LINE>174</LINE></sai>
+  <RESET><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>67</LINE></RESET>
+  <stop_count><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>125</LINE></stop_count>
+  <count1sec><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>121</LINE></count1sec>
+  <clockinit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>185</LINE></clockinit>
+  <loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>95</LINE></loop>
+  <timer0><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>104</LINE></timer0>
+  <n0><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>114</LINE></n0>
+  <clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>130</LINE></clock>
+  <clock_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>135</LINE></clock_loop>
+  <inc_sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>151</LINE></inc_sai>
+  <chk24h><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>158</LINE></chk24h>
+  <chk24h_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>163</LINE></chk24h_loop>
+  <sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>182</LINE></sai>
  </LABELS>
 </ASSEMBLER_INFO>
