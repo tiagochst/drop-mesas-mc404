@@ -87,9 +87,6 @@ RESET:
 	out TCCR0B,r	; also starts timer0 counting
 	sei		; Global Interrupt enable
 
-;	ldi r,1			; set prescalong: 1= no prescaling 5=  CK/1024 pre-scaling (p 102-103 datasheet)
-;	out TCCR0B,r	; also starts timer0 counting
-
 
 loop:
 
@@ -103,7 +100,8 @@ count1sec:
 reti
 
 stop_count:				; rotina de interrupcao INT0
-	clr r
+	in r, TCCR0B
+	com r
 	out TCCR0B, r		; stop timer0 counter: no more interrupts
 reti					; retorna com interrupções habilitadas
 
