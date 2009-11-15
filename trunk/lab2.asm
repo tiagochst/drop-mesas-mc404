@@ -73,23 +73,21 @@ RESET:
 	rcall clockinit
 
 	;não tô entendendo nada
-	ldi r, 1
-	sts PCMSK0, r
-	ldi r, 1
-	sts PCICR, r
-	;cbi ddrb,pb2		; configura p/ entrada no pino 4 (int0)
-	;sbi portb,pb2		; ativa resistor de pull up; deveria colocar o bit PB2 de PINB em 1
-	;ldi r,0
-	;sts EICRA, r		; queremos interromper no nivel baixo do sinal em pb2 (p. 84 datasheet)
-	;sbi eimsk,int0		; habilita interrupção INT0
-	ldi r,1				; sleep power down(SM1=1) & sleep enable SE=1(p 37 datasheet)
-	out SMCR,r			; do it
+	cbi DDRD,pd2		; configura p/ entrada no pino 4 (int0)
+	sbi DDRD,pd0		; saída: vamos ligar um led no pino 2 da CPU (pd0)
+	sbi PORTD,pd2		; ativa resistor de pull up; deveria colocar o bit PD2 de PIND em 1
+	ldi r,0
+	sts EICRA, r		; queremos interromper no nivel baixo do sinal em pd2 (p. 84 datasheet)
+	sbi eimsk,int0		; habilita interrupção INT0
+	ldi r,5				; sleep power down(SM1=1) & sleep enable SE=1(p 37 datasheet)
+	out SMCR,r			; do it 
 	;END não tô entendendo nada
 
 	ldi r,1			; era out TIMSK0,r no Atmega88 este registrador está fora do espaço de E/S!
 	sts TIMSK0,r	; enable timer0 overflow interrupt (p.102 datasheet)
 	ldi r,1			; set prescalong: 1= no prescaling 5=  CK/1024 pre-scaling (p 102-103 datasheet)
 	out TCCR0B,r	; also starts timer0 counting
+	out SMCR,r		; SMCR=1 selects idle mode sleep and enables sleep (p 37-38 datasheet)
 	sei		; Global Interrupt enable
 
 loop:
@@ -99,25 +97,8 @@ loop:
 	sleep				; "dorme" no modo power down: só acorda via interrupção externa
 	rjmp loop			; volta a "dormir" após serviço da interrupção
 
-;**************************************************************
-					; timer0 overflow interrupt routine
-timer0:
-    push r		; save into stack
-    in r,SREG	; get SREG
-	push r		; and save it in stack
-    adiw x,1
-	cpi  xh,0x02		; assume 0x200 interrupts make 1 second
-	brne n0
-	clr xl				; got 1 sec, clear 16 bit counter in X
-	clr xh
-	inc secsct			; and increment secon counter
-n0:
-	pop r		; get SREG from stack
-	out SREG, r	; restore it
-	pop r		; now restore r
-    reti
-;**************************************************************
 
+;**************************
 count1sec:
 	rcall clock
 reti
