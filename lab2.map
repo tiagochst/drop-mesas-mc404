@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  X:\alexandre\mc404\lab2\lab2.asm Sat Nov 14 23:49:26 2009
+AVRASM ver. 2.1.30  X:\alexandre\mc404\lab2\lab2.asm Sun Nov 15 00:42:06 2009
 
 
 EQU  SIGNATURE_000 0000001e
@@ -694,15 +694,13 @@ DEF  secsct       r21
 DEF  r            r16
 DEF  tmp          r17
 CSEG RESET        00000011
-CSEG stop_count   00000037
-CSEG count1sec    00000035
-CSEG clockinit    0000005f
-CSEG loop         00000024
-CSEG timer0       00000028
-CSEG n0           00000031
-CSEG clock        0000003a
-CSEG clock_loop   0000003d
-CSEG inc_sai      00000049
-CSEG chk24h       0000004d
-CSEG chk24h_loop  00000050
-CSEG sai          0000005e
+CSEG stop_count   0000002c
+CSEG count1sec    0000002a
+CSEG clockinit    00000054
+CSEG loop         00000026
+CSEG clock        0000002f
+CSEG clock_loop   00000032
+CSEG inc_sai      0000003e
+CSEG chk24h       00000042
+CSEG chk24h_loop  00000045
+CSEG sai          00000053

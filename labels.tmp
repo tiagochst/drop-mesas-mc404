@@ -20,17 +20,15 @@
  </OUTPUT_FILES>
  <LABELS>
   <RESET><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>67</LINE></RESET>
-  <stop_count><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>125</LINE></stop_count>
-  <count1sec><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>121</LINE></count1sec>
-  <clockinit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>185</LINE></clockinit>
-  <loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>95</LINE></loop>
-  <timer0><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>104</LINE></timer0>
-  <n0><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>114</LINE></n0>
-  <clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>130</LINE></clock>
-  <clock_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>135</LINE></clock_loop>
-  <inc_sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>151</LINE></inc_sai>
-  <chk24h><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>158</LINE></chk24h>
-  <chk24h_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>163</LINE></chk24h_loop>
-  <sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>182</LINE></sai>
+  <stop_count><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>106</LINE></stop_count>
+  <count1sec><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>102</LINE></count1sec>
+  <clockinit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>166</LINE></clockinit>
+  <loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>93</LINE></loop>
+  <clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>111</LINE></clock>
+  <clock_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>116</LINE></clock_loop>
+  <inc_sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>132</LINE></inc_sai>
+  <chk24h><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>139</LINE></chk24h>
+  <chk24h_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>144</LINE></chk24h_loop>
+  <sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>163</LINE></sai>
  </LABELS>
 </ASSEMBLER_INFO>
