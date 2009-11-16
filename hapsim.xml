@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<HAPSIM>
+   <General>
+      <Build>1904</Build>
+      <Position>
+         <top>366</top>
+         <bottom>666</bottom>
+         <left>566</left>
+         <right>966</right>
+      </Position>
+      <StayOnTop>1</StayOnTop>
+      <Target>ATmega88</Target>
+   </General>
+   <Views>
+      <LCD>
+         <Name>LCD1</Name>
+         <Position>
+            <top>4294967294</top>
+            <left>0</left>
+         </Position>
+         <DisplayConfig>
+            <columns>6</columns>
+            <rows>1</rows>
+            <bkColor>0xc1fa9d</bkColor>
+            <size>2</size>
+         </DisplayConfig>
+         <PortMapping>
+            <DataPort>
+               <Port>PORTD</Port>
+               <HighNibble>bit 4..7</HighNibble>
+               <LowNibble>bit 0..3</LowNibble>
+            </DataPort>
+            <EnablePin>
+               <Port>PORTC</Port>
+               <Bit>0</Bit>
+            </EnablePin>
+            <RW_Pin>
+               <WriteOnly>0</WriteOnly>
+               <Port>PORTC</Port>
+               <Bit>2</Bit>
+            </RW_Pin>
+            <RS_Pin>
+               <Port>PORTC</Port>
+               <Bit>1</Bit>
+            </RS_Pin>
+         </PortMapping>
+      </LCD>
+      <Buttons>
+         <Name>Buttons1</Name>
+         <Position>
+            <top>0</top>
+            <left>130</left>
+         </Position>
+         <Config index="0">
+            <Name>Liga/Desliga</Name>
+            <PortPin>
+               <Port>PORTB</Port>
+               <Bit>0</Bit>
+            </PortPin>
+            <Invert>0</Invert>
+         </Config>
+         <Config index="1">
+            <Name></Name>
+            <PortPin>
+               <Port>N.C.</Port>
+               <Bit>5</Bit>
+            </PortPin>
+            <Invert>0</Invert>
+         </Config>
+         <Config index="2">
+            <Name></Name>
+            <PortPin>
+               <Port>N.C.</Port>
+               <Bit>6</Bit>
+            </PortPin>
+            <Invert>0</Invert>
+         </Config>
+         <Config index="3">
+            <Name></Name>
+            <PortPin>
+               <Port>N.C.</Port>
+               <Bit>7</Bit>
+            </PortPin>
+            <Invert>0</Invert>
+         </Config>
+         <TrinaryGroupEnable index="0">0</TrinaryGroupEnable>
+         <TrinaryGroupEnable index="1">0</TrinaryGroupEnable>
+      </Buttons>
+   </Views>
+</HAPSIM>

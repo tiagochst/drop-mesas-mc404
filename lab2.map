@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  X:\alexandre\mc404\lab2\lab2.asm Sun Nov 15 00:42:06 2009
+AVRASM ver. 2.1.30  X:\alexandre\mc404\lab2\lab2.asm Mon Nov 16 05:26:52 2009
 
 
 EQU  SIGNATURE_000 0000001e
@@ -693,14 +693,27 @@ EQU  INT_VECTORS_SIZE 0000001a
 DEF  secsct       r21
 DEF  r            r16
 DEF  tmp          r17
-CSEG RESET        00000011
-CSEG stop_count   0000002c
-CSEG count1sec    0000002a
-CSEG clockinit    00000054
-CSEG loop         00000026
-CSEG clock        0000002f
-CSEG clock_loop   00000032
-CSEG inc_sai      0000003e
-CSEG chk24h       00000042
-CSEG chk24h_loop  00000045
-CSEG sai          00000053
+EQU  LCDDATA      0000000b
+EQU  LCDCTL       00000008
+EQU  ENABLE       00000000
+EQU  RS           00000001
+EQU  RW           00000002
+DEF  lcdinput     r19
+CSEG RESET        00000100
+CSEG count1sec    00000118
+CSEG toggle_clock 00000120
+CSEG clockinit    0000014a
+CSEG lcdinit      00000174
+CSEG LOOP         00000116
+CSEG clock        00000125
+CSEG lcd_cmd      00000161
+CSEG lcd_busy     00000154
+CSEG writemsg     0000016d
+CSEG clock_loop   00000128
+CSEG inc_sai      00000134
+CSEG chk24h       00000138
+CSEG chk24h_loop  0000013b
+CSEG sai          00000149
+CSEG lcd_busy_loop 00000159
+CSEG lcd_write    00000167
+CSEG writedone    00000173
