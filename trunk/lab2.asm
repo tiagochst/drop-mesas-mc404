@@ -98,12 +98,6 @@ RESET:
 
 LOOP:
 	sleep				; "dorme" no modo power down: só acorda via interrupção externa
-	rjmp LOOP			; volta a "dormir" após serviço da interrupção
-
-
-;**************************
-count1sec:
-	rcall clock
 
 	ldi lcdinput,2  ; init the LCD. 8 bit mode, 2*16
 	ldi zh, high(SRAM_START)
@@ -111,6 +105,13 @@ count1sec:
 	rcall lcd_cmd
 	rcall lcd_busy
     rcall writemsg		; display it
+
+	rjmp LOOP			; volta a "dormir" após serviço da interrupção
+
+
+;**************************
+count1sec:
+	rcall clock
 reti
 
 toggle_clock:				; rotina de interrupcao INT0
