@@ -19,23 +19,24 @@
   <FILE>X:\alexandre\mc404\lab2\lab2.map</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <RESET><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>75</LINE></RESET>
-  <count1sec><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>113</LINE></count1sec>
-  <toggle_clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>117</LINE></toggle_clock>
-  <clockinit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>179</LINE></clockinit>
-  <lcdinit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>247</LINE></lcdinit>
-  <LOOP><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>99</LINE></LOOP>
-  <lcd_cmd><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>215</LINE></lcd_cmd>
-  <lcd_busy><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>193</LINE></lcd_busy>
-  <writemsg><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>237</LINE></writemsg>
-  <clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>124</LINE></clock>
-  <clock_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>129</LINE></clock_loop>
-  <inc_sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>145</LINE></inc_sai>
-  <chk24h><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>152</LINE></chk24h>
-  <chk24h_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>157</LINE></chk24h_loop>
-  <sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>176</LINE></sai>
-  <lcd_busy_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>202</LINE></lcd_busy_loop>
-  <lcd_write><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>226</LINE></lcd_write>
-  <writedone><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>244</LINE></writedone>
+  <RESET><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>49</LINE></RESET>
+  <toggle_clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>82</LINE></toggle_clock>
+  <count1sec><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>78</LINE></count1sec>
+  <MAINLOOP><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>41</LINE></MAINLOOP>
+  <lcd_writetime><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>229</LINE></lcd_writetime>
+  <clockinit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>147</LINE></clockinit>
+  <lcdinit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>211</LINE></lcdinit>
+  <clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>92</LINE></clock>
+  <clock_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>97</LINE></clock_loop>
+  <inc_sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>113</LINE></inc_sai>
+  <chk24h><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>120</LINE></chk24h>
+  <chk24h_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>125</LINE></chk24h_loop>
+  <sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>144</LINE></sai>
+  <lcd_busy><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>162</LINE></lcd_busy>
+  <lcd_busy_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>171</LINE></lcd_busy_loop>
+  <lcd_cmd><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>183</LINE></lcd_cmd>
+  <lcd_write><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>192</LINE></lcd_write>
+  <writemsg><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>201</LINE></writemsg>
+  <writedone><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>208</LINE></writedone>
  </LABELS>
 </ASSEMBLER_INFO>

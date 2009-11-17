@@ -4,79 +4,53 @@
 ; * (C)2009 by Alexandre Nobuo Kunieda 080523 *   
 ; *            Tiago Cheadraoui Silva  082941 *
 ; *********************************************
-;
+
 ; Included header file for target AVR type
-;.NOLIST
-;.INCLUDE "m88def.inc"
-;.LIST
-;
+.NOLIST
+.INCLUDE "m88def.inc"
+.LIST
+
 ; ============================================
-;   R E G I S T E R   D E F I N I T I O N S
+;            D E F I N I T I O N S
 ; ============================================
 ;
 ; [Add all register names here, include info on
 ;  all used registers without specific names]
-;.DEF aux1 = R20
-;.DEF aux2 = R21
-;.DEF aux3 = R22
-;.DEF aux4 = R23
-;
-;
-;
+.DEF secsct = r21  ;seconds counter
+.DEF r = r16
+.DEF tmp = r17
+.DEF lcdinput = r19
+
+.EQU LCDDATA = PORTD
+.EQU LCDCTL = PORTC
+.EQU ENABLE = 0
+.EQU RS = 1
+.EQU RW = 2
+
+
+rjmp RESET  ;reset handle
+
+.org 0x003
+	rjmp toggle_clock	;vetor de interrupção INT0 em 0x01
+.org 0x010
+	rjmp count1sec		;go to timer0 overflow counter interrupt routine
+
 ; ============================================
 ;           M A I N    P R O G R A M
 ; ============================================
-;
-;rjmp Reset
-;Main:
-;	rjmp PC
-;
-;
+MAINLOOP:
+	sleep  ;"dorme", e acorda via interrupção
+	rcall lcd_writetime
+	rjmp MAINLOOP  ;volta a "dormir" após serviço da interrupção
+
 ; ============================================
 ;            I N I T    V A L U E S
 ; ============================================
-;
-;Reset:
-;	ldi aux1,LOW(RAMEND)  ; Init LSB stack
-;	out SPL,aux1
-;	ldi aux1,HIGH(RAMEND) ; Init LSB stack
-;	out SPH,aux1
-;
-;	rjmp Main
-;
-; ============================================
-;              F U N C T I O N S
-; ============================================
-;
-;
-
-.nolist
-.include "m88def.inc"
-.list
-.def    secsct  = r21		;seconds counter
-.def	r	=r16
-.def	tmp	=r17
-
-.equ LCDDATA=PORTD
-.equ LCDCTL=PORTC
-.EQU ENABLE=0
-.EQU RS=1
-.EQU RW=2
-.def    lcdinput    =   r19
-
-rjmp	RESET		;reset handle
-
-.org	0x10
-	rjmp count1sec		; go to timer0 overflow counter interrupt routine
-
-.org 0x003
-	rjmp    toggle_clock	;vetor de interrupção INT0 em 0x01
-.org	0x100
 RESET:
     ldi r, low(RAMEND)
-	out	SPL,r		;initialize Stack Pointer to last RAM address
-	ldi	r,high(RAMEND)
-	out SPH,r
+	out	SPL, r
+	ldi	r, high(RAMEND)
+	out SPH, r
 
 	rcall clockinit
 
@@ -94,33 +68,27 @@ RESET:
 	sei		; Global Interrupt enable
 
 	rcall lcdinit
-	rjmp LOOP
+	rjmp MAINLOOP
 
-LOOP:
-	sleep				; "dorme" no modo power down: só acorda via interrupção externa
-
-	ldi lcdinput,2  ; init the LCD. 8 bit mode, 2*16
-	ldi zh, high(SRAM_START)
-	ldi zl, low(SRAM_START)
-	rcall lcd_cmd
-	rcall lcd_busy
-    rcall writemsg		; display it
-
-	rjmp LOOP			; volta a "dormir" após serviço da interrupção
-
-
-;**************************
+; ============================================
+;              F U N C T I O N S
+; ============================================
+;
+; INTERRUPTION routines
 count1sec:
 	rcall clock
 reti
 
-toggle_clock:				; rotina de interrupcao INT0
+toggle_clock:  ; rotina de interrupcao INT0
 	in r, TCCR0B
 	ldi tmp, 1
 	eor r, tmp
-	out TCCR0B, r		; toggle timer0 counter
-reti					; retorna com interrupções habilitadas/desabilitadas (inverso do que entrou)
+	out TCCR0B, r  ; toggle timer0 counter
+reti  ; retorna com interrupções habilitadas/desabilitadas (inverso do que entrou)
 
+
+;
+; CLOCK functions
 clock:
 	ldi yh, high(SRAM_START+6) ;seta Y para o final do cronometro
 	ldi yl, low(SRAM_START+6)
@@ -189,61 +157,57 @@ clockinit:
 ret
 
 
-;*************************************************************************************
+;
+; HAPSIM functions
 lcd_busy:
-; test the busy state
-sbi portc,RW        ; RW high to read
-cbi portc,RS        ; RS low to read
+	; test the busy state
+	sbi portc,RW        ; RW high to read
+	cbi portc,RS        ; RS low to read
 
-ldi r16,0			; make port input
-out ddrd,r16
-out portd,r16
+	ldi r16,0			; make port input
+	out ddrd,r16
+	out portd,r16
 
-lcd_busy_loop:
-sbi portc,ENABLE    ; begin read sequence
-in r16,pind         ; read it
-cbi portc,ENABLE    ; set enable back to low
-;cbi portc,RW    ; clear the RW back to write mode
-sbrc r16,7          ; test bit 7, skip if clear
-rjmp lcd_busy_loop       ; jump if set
+	lcd_busy_loop:
+		sbi portc,ENABLE    ; begin read sequence
+		in r16,pind         ; read it
+		cbi portc,ENABLE    ; set enable back to low
+		;cbi portc,RW    ; clear the RW back to write mode
+		sbrc r16,7          ; test bit 7, skip if clear
+	rjmp lcd_busy_loop       ; jump if set
 
-ldi r16,0xff        ; make port output
-out ddrd,r16
+	ldi r16,0xff        ; make port output
+	out ddrd,r16
 ret
 
-;****************************************************************************************
 lcd_cmd:
-
-; lcd_cmd writes the LCD command in r19 to the LCD
-cbi portc,RS    ; RS low for command mode
-cbi portc,RW    ; RW low to write
-sbi portc,ENABLE    ; Enable HIGH
-out portd,lcdinput  ; output
-cbi portc,ENABLE    ; Enable LOW to execute
-
+	; lcd_cmd writes the LCD command in r19 to the LCD
+	cbi portc,RS    ; RS low for command mode
+	cbi portc,RW    ; RW low to write
+	sbi portc,ENABLE    ; Enable HIGH
+	out portd,lcdinput  ; output
+	cbi portc,ENABLE    ; Enable LOW to execute
 ret
-;*****************************************************************************************************
+
 lcd_write:
-
-; lcd_write writes the value in r19 to the LCD
-sbi portc,RS    ; RS high
-cbi portc,RW    ; RW low to write
-sbi portc,ENABLE    ; Enable HIGH
-out portd,lcdinput  ; output
-cbi portc,ENABLE    ; Enable LOW to execute
-
+	; lcd_write writes the value in r19 to the LCD
+	sbi portc,RS    ; RS high
+	cbi portc,RW    ; RW low to write
+	sbi portc,ENABLE    ; Enable HIGH
+	out portd,lcdinput  ; output
+	cbi portc,ENABLE    ; Enable LOW to execute
 ret
-;*****************************************************************
+
 writemsg:
-    ld lcdinput,z+      ; load r0 with the character to display          ; increment the string counter
-    cpi lcdinput, 0xFF
+	ld lcdinput,z+      ; load r0 with the character to display          ; increment the string counter
+	cpi lcdinput, 0xFF
 	breq writedone
-    rcall lcd_write
-    rcall lcd_busy
-    rjmp writemsg
+	rcall lcd_write
+	rcall lcd_busy
+	rjmp writemsg
 writedone:
- 	ret
-;*****************************************************************************************************
+ret
+
 lcdinit: 			;initialize LCD
 	ldi r16,0xff
 	out ddrd,r16 	;portb is the LCD data port, 8 bit mode set for output
@@ -258,7 +222,15 @@ lcdinit: 			;initialize LCD
 	;rcall lcd_cmd
 	;rcall lcd_busy
 	ldi lcdinput,2      ; cursor home command
-    rcall lcd_cmd        ; execute command
-    rcall lcd_busy
-	ret
-;*****************************************************************************************************
+	rcall lcd_cmd        ; execute command
+	rcall lcd_busy
+ret
+
+lcd_writetime:
+	ldi lcdinput,2  ; init the LCD. 8 bit mode, 2*16
+	ldi zh, high(SRAM_START)
+	ldi zl, low(SRAM_START)
+	rcall lcd_cmd
+	rcall lcd_busy
+	rcall writemsg  ; display it
+ret
