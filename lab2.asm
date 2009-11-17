@@ -16,7 +16,6 @@
 ;
 ; [Add all register names here, include info on
 ;  all used registers without specific names]
-.DEF secsct = r21  ;seconds counter
 .DEF r = r16
 .DEF tmp = r17
 .DEF lcdinput = r19
@@ -40,7 +39,6 @@ rjmp RESET  ;reset handle
 ; ============================================
 MAINLOOP:
 	sleep  ;"dorme", e acorda via interrupção
-	rcall lcd_writetime
 	rjmp MAINLOOP  ;volta a "dormir" após serviço da interrupção
 
 ; ============================================
@@ -52,22 +50,24 @@ RESET:
 	ldi	r, high(RAMEND)
 	out SPH, r
 
+	clr xh ;interruption counter
+	clr xl
 	rcall clockinit
 
 	ldi r,0
-	sts EICRA, r		; queremos interromper no nivel baixo do sinal em pd2 (p. 84 datasheet)
-	ldi r,5				; sleep power down(SM1=1) & sleep enable SE=1(p 37 datasheet)
-	out SMCR,r			; do it 
+	sts EICRA, r  ;queremos interromper no nivel baixo do sinal em pd2
+	ldi r,5  ;sleep power down(SM1=1) & sleep enable SE=1
+	out SMCR,r  ;do it 
 
-	ldi r,1			; era out TIMSK0,r no Atmega88 este registrador está fora do espaço de E/S!
-	sts PCICR, r               ; Ativa interrup. da porta B
-	sts PCMSK0,r               ; Bit 0 da porta B causa interrup.
-	sts TIMSK0,r	; enable timer0 overflow interrupt (p.102 datasheet)
-	ldi r,1			; set prescalong: 1= no prescaling 5=  CK/1024 pre-scaling (p 102-103 datasheet)
-	out TCCR0B,r	; also starts timer0 counting
-	sei		; Global Interrupt enable
+	ldi r,1  ;era out TIMSK0,r no Atmega88 este registrador está fora do espaço de E/S!
+	sts PCICR, r  ;Ativa interrup. da porta B
+	sts PCMSK0,r  ;Bit 0 da porta B causa interrup
+	sts TIMSK0,r  ;enable timer0 overflow interrupt
+	ldi r,1  ;set prescalong: 1= no prescaling 5=  CK/1024 pre-scaling
+	out TCCR0B,r  ;also starts timer0 counting
 
-	rcall lcdinit
+	sei  ;Global Interrupt enable
+
 	rjmp MAINLOOP
 
 ; ============================================
@@ -76,7 +76,18 @@ RESET:
 ;
 ; INTERRUPTION routines
 count1sec:
+	adiw X, 1
+
+	ldi r, 0x0F
+	cpi xl, 0x42
+	cpc xh, r
+	brne count1sec_exit
+
+	clr xh
+	clr xl
 	rcall clock
+
+	count1sec_exit:
 reti
 
 toggle_clock:  ; rotina de interrupcao INT0
@@ -156,81 +167,3 @@ clockinit:
 	st Y+, r
 ret
 
-
-;
-; HAPSIM functions
-lcd_busy:
-	; test the busy state
-	sbi portc,RW        ; RW high to read
-	cbi portc,RS        ; RS low to read
-
-	ldi r16,0			; make port input
-	out ddrd,r16
-	out portd,r16
-
-	lcd_busy_loop:
-		sbi portc,ENABLE    ; begin read sequence
-		in r16,pind         ; read it
-		cbi portc,ENABLE    ; set enable back to low
-		;cbi portc,RW    ; clear the RW back to write mode
-		sbrc r16,7          ; test bit 7, skip if clear
-	rjmp lcd_busy_loop       ; jump if set
-
-	ldi r16,0xff        ; make port output
-	out ddrd,r16
-ret
-
-lcd_cmd:
-	; lcd_cmd writes the LCD command in r19 to the LCD
-	cbi portc,RS    ; RS low for command mode
-	cbi portc,RW    ; RW low to write
-	sbi portc,ENABLE    ; Enable HIGH
-	out portd,lcdinput  ; output
-	cbi portc,ENABLE    ; Enable LOW to execute
-ret
-
-lcd_write:
-	; lcd_write writes the value in r19 to the LCD
-	sbi portc,RS    ; RS high
-	cbi portc,RW    ; RW low to write
-	sbi portc,ENABLE    ; Enable HIGH
-	out portd,lcdinput  ; output
-	cbi portc,ENABLE    ; Enable LOW to execute
-ret
-
-writemsg:
-	ld lcdinput,z+      ; load r0 with the character to display          ; increment the string counter
-	cpi lcdinput, 0xFF
-	breq writedone
-	rcall lcd_write
-	rcall lcd_busy
-	rjmp writemsg
-writedone:
-ret
-
-lcdinit: 			;initialize LCD
-	ldi r16,0xff
-	out ddrd,r16 	;portb is the LCD data port, 8 bit mode set for output
-	out ddrc,r16	;portc is the LCD control pins set for output
-	ldi lcdinput,56  ; init the LCD. 8 bit mode, 2*16
-	rcall lcd_cmd    ; execute the command
-	rcall lcd_busy   ; test busy
-	ldi lcdinput,1		; clear screen
-	rcall lcd_cmd
-	rcall lcd_busy
-	;ldi lcdinput,15 	; show cursor and blink it
-	;rcall lcd_cmd
-	;rcall lcd_busy
-	ldi lcdinput,2      ; cursor home command
-	rcall lcd_cmd        ; execute command
-	rcall lcd_busy
-ret
-
-lcd_writetime:
-	ldi lcdinput,2  ; init the LCD. 8 bit mode, 2*16
-	ldi zh, high(SRAM_START)
-	ldi zl, low(SRAM_START)
-	rcall lcd_cmd
-	rcall lcd_busy
-	rcall writemsg  ; display it
-ret
