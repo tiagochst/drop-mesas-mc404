@@ -18,55 +18,44 @@
 ;  all used registers without specific names]
 .DEF r = r16
 .DEF tmp = r17
-.DEF lcdinput = r19
-
-.EQU LCDDATA = PORTD
-.EQU LCDCTL = PORTC
-.EQU ENABLE = 0
-.EQU RS = 1
-.EQU RW = 2
 
 
-rjmp RESET  ;reset handle
+rjmp RESET
 
 .org 0x003
-	rjmp toggle_clock	;vetor de interrupção INT0 em 0x01
+	rjmp toggle_clock  ;go to toggle_clock interrupt routine
 .org 0x010
-	rjmp count1sec		;go to timer0 overflow counter interrupt routine
+	rjmp count1sec  ;go to count1sec overflow counter interrupt routine
 
 ; ============================================
 ;           M A I N    P R O G R A M
 ; ============================================
 MAINLOOP:
-	sleep  ;"dorme", e acorda via interrupção
-	rjmp MAINLOOP  ;volta a "dormir" após serviço da interrupção
+	sleep  ;"sleep" and wake up by interruption
+	rjmp MAINLOOP  ;go back to "sleep" after interrupt routine
 
 ; ============================================
 ;            I N I T    V A L U E S
 ; ============================================
 RESET:
-    ldi r, low(RAMEND)
+    ldi r, low(RAMEND)  ;initialize stack
 	out	SPL, r
 	ldi	r, high(RAMEND)
 	out SPH, r
 
-	clr xh ;interruption counter
+	clr xh  ;interruption counter
 	clr xl
-	rcall clockinit
+	rcall clockinit  ;initialize cronograph with zeros
 
-	ldi r,0
-	sts EICRA, r  ;queremos interromper no nivel baixo do sinal em pd2
-	ldi r,5  ;sleep power down(SM1=1) & sleep enable SE=1
-	out SMCR,r  ;do it 
+	ldi r,1
+	sts PCICR, r  ;set bit 0 of B port to activate PCINT0 interruption
+	sts PCMSK0,r  ;activate PCINT0 interruption
 
-	ldi r,1  ;era out TIMSK0,r no Atmega88 este registrador está fora do espaço de E/S!
-	sts PCICR, r  ;Ativa interrup. da porta B
-	sts PCMSK0,r  ;Bit 0 da porta B causa interrup
 	sts TIMSK0,r  ;enable timer0 overflow interrupt
-	ldi r,1  ;set prescalong: 1= no prescaling 5=  CK/1024 pre-scaling
+	ldi r,1  ;set no prescaling
 	out TCCR0B,r  ;also starts timer0 counting
 
-	sei  ;Global Interrupt enable
+	sei  ;global interrupt enable
 
 	rjmp MAINLOOP
 
@@ -80,28 +69,28 @@ count1sec:
 
 	ldi r, 0x0F
 	cpi xl, 0x42
-	cpc xh, r
+	cpc xh, r  ;if the number of interruptions achieved 0xF42, 1 sec has gone
 	brne count1sec_exit
 
-	clr xh
+	clr xh  ;restart counter of number of interruptions
 	clr xl
 	rcall clock
 
 	count1sec_exit:
 reti
 
-toggle_clock:  ; rotina de interrupcao INT0
+toggle_clock:  ;INT0 interruption routine
 	in r, TCCR0B
 	ldi tmp, 1
 	eor r, tmp
-	out TCCR0B, r  ; toggle timer0 counter
-reti  ; retorna com interrupções habilitadas/desabilitadas (inverso do que entrou)
+	out TCCR0B, r  ;toggle INT0 interruption
+reti  ;INT0 interruption will be disabled/abled (the opposite it started in this routine)
 
 
 ;
 ; CLOCK functions
 clock:
-	ldi yh, high(SRAM_START+6) ;seta Y para o final do cronometro
+	ldi yh, high(SRAM_START+6)  ;Y must be in the end of the cronograph
 	ldi yl, low(SRAM_START+6)
 
 	ldi tmp, 3
@@ -129,7 +118,7 @@ clock:
 ret
 
 chk24h:
-	ldi yh, high(SRAM_START+6) ;seta Y para o final do cronometro
+	ldi yh, high(SRAM_START+6)  ;Y must be in the end of the cronograph
 	ldi yl, low(SRAM_START+6)
 
 	ldi tmp, 4
@@ -166,4 +155,3 @@ clockinit:
 	st Y+, r
 	st Y+, r
 ret
-
