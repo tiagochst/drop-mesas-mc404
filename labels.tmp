@@ -1,35 +1,43 @@
 <ASSEMBLER_INFO>
- <VERSION>2.1.30</VERSION>
+ <VERSION>2.1.7</VERSION>
  <DEVICE>ATmega88</DEVICE>
- <WORKING_DIR>X:\alexandre\mc404\lab2</WORKING_DIR>
+ <WORKING_DIR>C:\Documents and Settings\ra082941\Desktop\Nova pasta</WORKING_DIR>
  <INCLUDE_PATH>
   <DIR>C:\Arquivos de programas\Atmel\AVR Tools\AvrAssembler2\Appnotes</DIR>
  </INCLUDE_PATH>
- <SOURCE_FILE>X:\alexandre\mc404\lab2\lab2.asm</SOURCE_FILE>
+ <SOURCE_FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</SOURCE_FILE>
  <INCLUDED_FILES>
   <FILE>C:\Arquivos de programas\Atmel\AVR Tools\AvrAssembler2\Appnotes\m88def.inc</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
-  <FILE>X:\alexandre\mc404\lab2\lab2.obj</FILE>
+  <FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.obj</FILE>
  </OBJECT_FILES>
  <HEX_FILES>
-  <FILE>X:\alexandre\mc404\lab2\lab2.hex</FILE>
+  <FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.hex</FILE>
  </HEX_FILES>
  <OUTPUT_FILES>
-  <FILE>X:\alexandre\mc404\lab2\lab2.map</FILE>
+  <FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.map</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <RESET><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>40</LINE></RESET>
-  <toggle_clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>82</LINE></toggle_clock>
-  <count1sec><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>67</LINE></count1sec>
-  <MAINLOOP><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>33</LINE></MAINLOOP>
-  <clockinit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>147</LINE></clockinit>
-  <count1sec_exit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>79</LINE></count1sec_exit>
-  <clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>92</LINE></clock>
-  <clock_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>97</LINE></clock_loop>
-  <inc_sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>113</LINE></inc_sai>
-  <chk24h><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>120</LINE></chk24h>
-  <chk24h_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>125</LINE></chk24h_loop>
-  <sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>144</LINE></sai>
+  <RESET><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>47</LINE></RESET>
+  <toggle_clock><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>94</LINE></toggle_clock>
+  <count1sec><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>76</LINE></count1sec>
+  <MAINLOOP><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>40</LINE></MAINLOOP>
+  <clockinit><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>160</LINE></clockinit>
+  <lcdinit><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>224</LINE></lcdinit>
+  <lcd_writetime><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>242</LINE></lcd_writetime>
+  <count1sec_exit><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>91</LINE></count1sec_exit>
+  <clock><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>105</LINE></clock>
+  <clock_loop><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>110</LINE></clock_loop>
+  <inc_sai><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>126</LINE></inc_sai>
+  <chk24h><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>133</LINE></chk24h>
+  <chk24h_loop><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>138</LINE></chk24h_loop>
+  <sai><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>157</LINE></sai>
+  <lcd_busy><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>175</LINE></lcd_busy>
+  <lcd_busy_loop><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>184</LINE></lcd_busy_loop>
+  <lcd_cmd><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>196</LINE></lcd_cmd>
+  <lcd_write><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>205</LINE></lcd_write>
+  <writemsg><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>214</LINE></writemsg>
+  <writedone><FILE>C:\Documents and Settings\ra082941\Desktop\Nova pasta\lab2.asm</FILE><LINE>221</LINE></writedone>
  </LABELS>
 </ASSEMBLER_INFO>
