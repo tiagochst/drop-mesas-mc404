@@ -19,17 +19,17 @@
   <FILE>X:\alexandre\mc404\lab2\lab2.map</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <RESET><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>47</LINE></RESET>
-  <toggle_clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>93</LINE></toggle_clock>
-  <count1sec><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>78</LINE></count1sec>
-  <MAINLOOP><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>40</LINE></MAINLOOP>
-  <clockinit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>158</LINE></clockinit>
-  <count1sec_exit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>90</LINE></count1sec_exit>
-  <clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>103</LINE></clock>
-  <clock_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>108</LINE></clock_loop>
-  <inc_sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>124</LINE></inc_sai>
-  <chk24h><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>131</LINE></chk24h>
-  <chk24h_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>136</LINE></chk24h_loop>
-  <sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>155</LINE></sai>
+  <RESET><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>40</LINE></RESET>
+  <toggle_clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>82</LINE></toggle_clock>
+  <count1sec><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>67</LINE></count1sec>
+  <MAINLOOP><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>33</LINE></MAINLOOP>
+  <clockinit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>147</LINE></clockinit>
+  <count1sec_exit><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>79</LINE></count1sec_exit>
+  <clock><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>92</LINE></clock>
+  <clock_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>97</LINE></clock_loop>
+  <inc_sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>113</LINE></inc_sai>
+  <chk24h><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>120</LINE></chk24h>
+  <chk24h_loop><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>125</LINE></chk24h_loop>
+  <sai><FILE>X:\alexandre\mc404\lab2\lab2.asm</FILE><LINE>144</LINE></sai>
  </LABELS>
 </ASSEMBLER_INFO>
